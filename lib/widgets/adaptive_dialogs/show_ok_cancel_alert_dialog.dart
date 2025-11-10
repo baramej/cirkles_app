@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-
-import 'package:flutter_linkify/flutter_linkify.dart';
-
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/url_launcher.dart';
 import 'package:fluffychat/widgets/adaptive_dialogs/adaptive_dialog_action.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 enum OkCancelResult { ok, cancel }
 
@@ -42,19 +40,15 @@ Future<OkCancelResult?> showOkCancelAlertDialog({
         ),
         actions: [
           AdaptiveDialogAction(
-            onPressed: () => Navigator.of(context)
-                .pop<OkCancelResult>(OkCancelResult.cancel),
+            onPressed: () => Navigator.of(context).pop<OkCancelResult>(OkCancelResult.cancel),
             child: Text(cancelLabel ?? L10n.of(context).cancel),
           ),
           AdaptiveDialogAction(
-            onPressed: () =>
-                Navigator.of(context).pop<OkCancelResult>(OkCancelResult.ok),
+            onPressed: () => Navigator.of(context).pop<OkCancelResult>(OkCancelResult.ok),
             autofocus: true,
             child: Text(
               okLabel ?? L10n.of(context).ok,
-              style: isDestructive
-                  ? TextStyle(color: Theme.of(context).colorScheme.error)
-                  : null,
+              style: isDestructive ? const TextStyle(color: Colors.red) : null,
             ),
           ),
         ],
@@ -93,8 +87,7 @@ Future<OkCancelResult?> showOkAlertDialog({
         ),
         actions: [
           AdaptiveDialogAction(
-            onPressed: () =>
-                Navigator.of(context).pop<OkCancelResult>(OkCancelResult.ok),
+            onPressed: () => Navigator.of(context).pop<OkCancelResult>(OkCancelResult.ok),
             autofocus: true,
             child: Text(okLabel ?? L10n.of(context).close),
           ),

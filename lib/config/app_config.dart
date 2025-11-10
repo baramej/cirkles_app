@@ -3,13 +3,14 @@ import 'dart:ui';
 import 'package:matrix/matrix.dart';
 
 abstract class AppConfig {
-  static String _applicationName = 'FluffyChat';
+  static String _applicationName = 'Cirkles';
 
   static String get applicationName => _applicationName;
   static String? _applicationWelcomeMessage;
 
   static String? get applicationWelcomeMessage => _applicationWelcomeMessage;
-  static String _defaultHomeserver = 'matrix.org';
+  //static String _defaultHomeserver = 'matrix.cirkles.app';
+  static String _defaultHomeserver = 'encephalographically-wirespun-vaughn.ngrok-free.dev';
 
   static String get defaultHomeserver => _defaultHomeserver;
   static double fontSizeFactor = 1;
@@ -18,11 +19,10 @@ abstract class AppConfig {
   static const double messageFontSize = 16.0;
   static const bool allowOtherHomeservers = true;
   static const bool enableRegistration = true;
-  static const Color primaryColor = Color(0xFF5625BA);
-  static const Color primaryColorLight = Color(0xFFCCBDEA);
-  static const Color secondaryColor = Color(0xFF41a2bc);
-  static String _privacyUrl =
-      'https://github.com/krille-chan/fluffychat/blob/main/PRIVACY.md';
+  static const Color primaryColor = Color(0xFF0F172A);
+  static const Color primaryColorLight = Color(0xFFEFEFEF);
+  static const Color secondaryColor = Color(0xFFF7F7F7);
+  static String _privacyUrl = 'https://github.com/krille-chan/fluffychat/blob/main/PRIVACY.md';
 
   static const Set<String> defaultReactions = {'👍', '❤️', '😂', '😮', '😢'};
 
@@ -39,12 +39,9 @@ abstract class AppConfig {
   static String _webBaseUrl = 'https://fluffychat.im/web';
 
   static String get webBaseUrl => _webBaseUrl;
-  static const String sourceCodeUrl =
-      'https://github.com/krille-chan/fluffychat';
-  static const String supportUrl =
-      'https://github.com/krille-chan/fluffychat/issues';
-  static const String changelogUrl =
-      'https://github.com/krille-chan/fluffychat/blob/main/CHANGELOG.md';
+  static const String sourceCodeUrl = 'https://github.com/krille-chan/fluffychat';
+  static const String supportUrl = 'https://github.com/krille-chan/fluffychat/issues';
+  static const String changelogUrl = 'https://github.com/krille-chan/fluffychat/blob/main/CHANGELOG.md';
   static final Uri newIssueUrl = Uri(
     scheme: 'https',
     host: 'github.com',

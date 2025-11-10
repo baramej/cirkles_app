@@ -24,6 +24,7 @@ class NewPrivateChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isLight = theme.brightness == Brightness.light;
 
     final searchResponse = controller.searchResponse;
     final userId = Matrix.of(context).client.userID!;
@@ -54,20 +55,26 @@ class NewPrivateChatView extends StatelessWidget {
               child: TextField(
                 controller: controller.controller,
                 onChanged: controller.searchUsers,
+                style: TextStyle(
+                  color: isLight ? theme.colorScheme.primary : theme.colorScheme.onPrimary,
+                ),
                 decoration: InputDecoration(
                   hintText: L10n.of(context).searchForUsers,
                   filled: true,
-                  fillColor: theme.colorScheme.secondaryContainer,
+                  fillColor: Colors.grey.shade300,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(99),
                   ),
                   hintStyle: TextStyle(
-                    color: theme.colorScheme.onPrimaryContainer,
+                    color: isLight ? theme.colorScheme.primary : theme.colorScheme.onPrimary,
                     fontWeight: FontWeight.normal,
                   ),
                   prefixIcon: searchResponse == null
-                      ? const Icon(Icons.search_outlined)
+                      ? Icon(
+                          Icons.search_outlined,
+                          color: isLight ? theme.colorScheme.primary : theme.colorScheme.onPrimary,
+                        )
                       : FutureBuilder(
                           future: searchResponse,
                           builder: (context, snapshot) {
@@ -83,13 +90,19 @@ class NewPrivateChatView extends StatelessWidget {
                                 ),
                               );
                             }
-                            return const Icon(Icons.search_outlined);
+                            return Icon(
+                              Icons.search_outlined,
+                              color: isLight ? theme.colorScheme.primary : theme.colorScheme.onPrimary,
+                            );
                           },
                         ),
                   suffixIcon: controller.controller.text.isEmpty
                       ? null
                       : IconButton(
-                          icon: const Icon(Icons.clear_outlined),
+                          icon: Icon(
+                            Icons.clear_outlined,
+                            color: isLight ? theme.colorScheme.primary : theme.colorScheme.onPrimary,
+                          ),
                           onPressed: () {
                             controller.controller.clear();
                             controller.searchUsers();
@@ -104,30 +117,6 @@ class NewPrivateChatView extends StatelessWidget {
                 child: searchResponse == null
                     ? ListView(
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: SelectableText.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: L10n.of(context).yourGlobalUserIdIs,
-                                  ),
-                                  TextSpan(
-                                    text: Matrix.of(context).client.userID,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              style: TextStyle(
-                                color: theme.colorScheme.onSurface,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
                           ListTile(
                             leading: CircleAvatar(
                               backgroundColor:

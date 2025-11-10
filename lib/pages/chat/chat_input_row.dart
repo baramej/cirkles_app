@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:animations/animations.dart';
-import 'package:matrix/matrix.dart';
-
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/other_party_can_receive.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:flutter/material.dart';
+import 'package:matrix/matrix.dart';
+
 import '../../config/themes.dart';
 import 'chat.dart';
 import 'input_bar.dart';
@@ -46,8 +45,7 @@ class ChatInputRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: controller.selectMode
           ? <Widget>[
-              if (controller.selectedEvents
-                  .every((event) => event.status == EventStatus.error))
+              if (controller.selectedEvents.every((event) => event.status == EventStatus.error))
                 SizedBox(
                   height: height,
                   child: TextButton(
@@ -78,10 +76,7 @@ class ChatInputRow extends StatelessWidget {
                   ),
                 ),
               controller.selectedEvents.length == 1
-                  ? controller.selectedEvents.first
-                          .getDisplayEvent(controller.timeline!)
-                          .status
-                          .isSent
+                  ? controller.selectedEvents.first.getDisplayEvent(controller.timeline!).status.isSent
                       ? SizedBox(
                           height: height,
                           child: TextButton(
@@ -124,17 +119,15 @@ class ChatInputRow extends StatelessWidget {
                 child: PopupMenuButton<String>(
                   useRootNavigator: true,
                   icon: const Icon(Icons.add_circle_outline),
-                  iconColor: theme.colorScheme.onPrimaryContainer,
+                  iconColor: theme.colorScheme.primary,
                   onSelected: controller.onAddPopupMenuButtonSelected,
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<String>>[
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                     if (PlatformInfos.isMobile)
                       PopupMenuItem<String>(
                         value: 'location',
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor:
-                                theme.colorScheme.onPrimaryContainer,
+                            backgroundColor: theme.colorScheme.onPrimaryContainer,
                             foregroundColor: theme.colorScheme.primaryContainer,
                             child: const Icon(Icons.gps_fixed_outlined),
                           ),
@@ -194,14 +187,13 @@ class ChatInputRow extends StatelessWidget {
                     useRootNavigator: true,
                     icon: const Icon(Icons.camera_alt_outlined),
                     onSelected: controller.onAddPopupMenuButtonSelected,
-                    iconColor: theme.colorScheme.onPrimaryContainer,
+                    iconColor: theme.colorScheme.primary,
                     itemBuilder: (context) => [
                       PopupMenuItem<String>(
                         value: 'camera-video',
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor:
-                                theme.colorScheme.onPrimaryContainer,
+                            backgroundColor: theme.colorScheme.onPrimaryContainer,
                             foregroundColor: theme.colorScheme.primaryContainer,
                             child: const Icon(Icons.videocam_outlined),
                           ),
@@ -213,8 +205,7 @@ class ChatInputRow extends StatelessWidget {
                         value: 'camera',
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor:
-                                theme.colorScheme.onPrimaryContainer,
+                            backgroundColor: theme.colorScheme.onPrimaryContainer,
                             foregroundColor: theme.colorScheme.primaryContainer,
                             child: const Icon(Icons.camera_alt_outlined),
                           ),
@@ -231,7 +222,7 @@ class ChatInputRow extends StatelessWidget {
                 alignment: Alignment.center,
                 child: IconButton(
                   tooltip: L10n.of(context).emojis,
-                  color: theme.colorScheme.onPrimaryContainer,
+                  color: theme.colorScheme.primary,
                   icon: PageTransitionSwitcher(
                     transitionBuilder: (
                       Widget child,
@@ -247,9 +238,7 @@ class ChatInputRow extends StatelessWidget {
                       );
                     },
                     child: Icon(
-                      controller.showEmojiPicker
-                          ? Icons.keyboard
-                          : Icons.add_reaction_outlined,
+                      controller.showEmojiPicker ? Icons.keyboard : Icons.add_reaction_outlined,
                       key: ValueKey(controller.showEmojiPicker),
                     ),
                   ),
@@ -275,9 +264,7 @@ class ChatInputRow extends StatelessWidget {
                     autofocus: !PlatformInfos.isMobile,
                     keyboardType: TextInputType.multiline,
                     textInputAction:
-                        AppConfig.sendOnEnter == true && PlatformInfos.isMobile
-                            ? TextInputAction.send
-                            : null,
+                        AppConfig.sendOnEnter == true && PlatformInfos.isMobile ? TextInputAction.send : null,
                     onSubmitted: controller.onInputBarSubmitted,
                     onSubmitImage: controller.sendImageFromClipBoard,
                     focusNode: controller.inputFocus,
@@ -304,8 +291,7 @@ class ChatInputRow extends StatelessWidget {
                 height: height,
                 width: height,
                 alignment: Alignment.center,
-                child: PlatformInfos.platformCanRecord &&
-                        controller.sendController.text.isEmpty
+                child: PlatformInfos.platformCanRecord && controller.sendController.text.isEmpty
                     ? FloatingActionButton.small(
                         tooltip: L10n.of(context).voiceMessage,
                         onPressed: controller.voiceMessageAction,
@@ -342,9 +328,7 @@ class _ChatAccountPicker extends StatelessWidget {
   const _ChatAccountPicker(this.controller);
 
   void _popupMenuButtonSelected(String mxid, BuildContext context) {
-    final client = Matrix.of(context)
-        .currentBundle!
-        .firstWhere((cl) => cl!.userID == mxid, orElse: () => null);
+    final client = Matrix.of(context).currentBundle!.firstWhere((cl) => cl!.userID == mxid, orElse: () => null);
     if (client == null) {
       Logs().w('Attempted to switch to a non-existing client $mxid');
       return;
@@ -371,8 +355,7 @@ class _ChatAccountPicker extends StatelessWidget {
                     builder: (context, snapshot) => ListTile(
                       leading: Avatar(
                         mxContent: snapshot.data?.avatarUrl,
-                        name: snapshot.data?.displayName ??
-                            client.userID!.localpart,
+                        name: snapshot.data?.displayName ?? client.userID!.localpart,
                         size: 20,
                       ),
                       title: Text(snapshot.data?.displayName ?? client.userID!),
@@ -384,8 +367,7 @@ class _ChatAccountPicker extends StatelessWidget {
               .toList(),
           child: Avatar(
             mxContent: snapshot.data?.avatarUrl,
-            name: snapshot.data?.displayName ??
-                Matrix.of(context).client.userID!.localpart,
+            name: snapshot.data?.displayName ?? Matrix.of(context).client.userID!.localpart,
             size: 20,
           ),
         ),

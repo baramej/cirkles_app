@@ -3216,7 +3216,7 @@
   "@open": {},
   "waitingForServer": "Waiting for server...",
   "@waitingForServer": {},
-  "appIntroduction": "FluffyChat lets you chat with your friends across different messengers. Learn more at https://matrix.org or just tap *Continue*.",
+  "appIntroduction": "Our chat app is the perfect way to stay connected with friends and family.",
   "@appIntroduction": {},
   "newChatRequest": "📩 New chat request",
   "@newChatRequest": {},
@@ -3375,5 +3375,10 @@
   "@moreEvents": {},
   "declineInvitation": "Decline invitation",
   "@declineInvitation": {},
-  "noMessagesYet": "No messages yet"
+  "noMessagesYet": "No messages yet",
+  "appIntroductionHeadline": "Connect with friends easily & securely",
+  "home": "Home",
+  "circles": "Circles",
+  "dontHaveAccount": "Don't have an account? Register here",
+  "usernameHint": "Enter your username here"
 }

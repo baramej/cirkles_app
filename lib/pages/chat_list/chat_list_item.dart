@@ -53,7 +53,7 @@ class ChatListItem extends StatelessWidget {
         : 0.0;
     final hasNotifications = room.notificationCount > 0;
     final backgroundColor =
-        activeChat ? theme.colorScheme.secondaryContainer : null;
+        activeChat ? Colors.grey.shade300 : null;
     final displayname = room.getLocalizedDisplayname(
       MatrixLocals(L10n.of(context)),
     );

@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-
-import 'package:go_router/go_router.dart';
-import 'package:matrix/matrix.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:fluffychat/config/routes.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/widgets/app_lock.dart';
 import 'package:fluffychat/widgets/theme_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:matrix/matrix.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../config/app_config.dart';
 import '../utils/custom_scroll_behaviour.dart';
 import 'matrix.dart';
@@ -35,6 +34,8 @@ class FluffyChatApp extends StatelessWidget {
   // Router must be outside of build method so that hot reload does not reset
   // the current path.
   static final GoRouter router = GoRouter(
+    initialLocation: "/rooms",
+    navigatorKey: AppRoutes.parentNavigatorKey,
     routes: AppRoutes.routes,
     debugLogDiagnostics: true,
   );
@@ -46,8 +47,7 @@ class FluffyChatApp extends StatelessWidget {
         title: AppConfig.applicationName,
         themeMode: themeMode,
         theme: FluffyThemes.buildTheme(context, Brightness.light, primaryColor),
-        darkTheme:
-            FluffyThemes.buildTheme(context, Brightness.dark, primaryColor),
+        darkTheme: FluffyThemes.buildTheme(context, Brightness.dark, primaryColor),
         scrollBehavior: CustomScrollBehavior(),
         localizationsDelegates: L10n.localizationsDelegates,
         supportedLocales: L10n.supportedLocales,

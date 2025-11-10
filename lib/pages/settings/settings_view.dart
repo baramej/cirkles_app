@@ -67,7 +67,7 @@ class SettingsView extends StatelessWidget {
                     builder: (context, snapshot) {
                       final profile = snapshot.data;
                       final avatar = profile?.avatarUrl;
-                      final mxid = Matrix.of(context).client.userID ??
+                      final mxid = Matrix.of(context).client.userID?.localpart ??
                           L10n.of(context).user;
                       final displayname =
                           profile?.displayName ?? mxid.localpart ?? mxid;
@@ -227,20 +227,20 @@ class SettingsView extends StatelessWidget {
                             : null,
                   ),
                   Divider(color: theme.dividerColor),
-                  ListTile(
-                    leading: const Icon(Icons.dns_outlined),
-                    title: Text(
-                      L10n.of(context).aboutHomeserver(
-                        Matrix.of(context).client.userID?.domain ??
-                            'homeserver',
-                      ),
-                    ),
-                    onTap: () => context.go('/rooms/settings/homeserver'),
-                    tileColor:
-                        activeRoute.startsWith('/rooms/settings/homeserver')
-                            ? theme.colorScheme.surfaceContainerHigh
-                            : null,
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.dns_outlined),
+                  //   title: Text(
+                  //     L10n.of(context).aboutHomeserver(
+                  //       Matrix.of(context).client.userID?.domain ??
+                  //           'homeserver',
+                  //     ),
+                  //   ),
+                  //   onTap: () => context.go('/rooms/settings/homeserver'),
+                  //   tileColor:
+                  //       activeRoute.startsWith('/rooms/settings/homeserver')
+                  //           ? theme.colorScheme.surfaceContainerHigh
+                  //           : null,
+                  // ),
                   ListTile(
                     leading: const Icon(Icons.privacy_tip_outlined),
                     title: Text(L10n.of(context).privacy),
