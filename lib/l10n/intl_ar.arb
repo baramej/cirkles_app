@@ -3183,5 +3183,7 @@
     "otherPartyNotLoggedIn": "لم يقم الطرف الآخر بتسجيل الدخول حالياً وبالتالي لا يمكنه تلقي الرسائل!",
     "@otherPartyNotLoggedIn": {},
     "setCustomPermissionLevel": "حدد مستوى صلاحية مخصص",
-    "@setCustomPermissionLevel": {}
+    "@setCustomPermissionLevel": {},
+    "moments": "Moments",
+    "routes": "Routes"
 }

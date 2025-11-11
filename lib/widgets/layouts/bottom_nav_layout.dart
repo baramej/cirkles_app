@@ -39,6 +39,14 @@ class _BottomNavLayoutState extends State<BottomNavLayout> {
             icon: const Icon(Icons.circle_outlined),
             label: L10n.of(context).circles,
           ),
+          NavigationDestination(
+            icon: const Icon(Icons.music_note),
+            label: L10n.of(context).moments,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.navigation),
+            label: L10n.of(context).routes,
+          ),
         ],
       ),
       body: FluffyThemes.isColumnMode(context) && state.fullPath?.startsWith('/rooms/settings') == false

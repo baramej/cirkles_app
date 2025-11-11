@@ -3380,5 +3380,7 @@
   "home": "Home",
   "circles": "Circles",
   "dontHaveAccount": "Don't have an account? Register here",
-  "usernameHint": "Enter your username here"
+  "usernameHint": "Enter your username here",
+  "moments": "Moments",
+  "routes": "Routes"
 }

@@ -16,8 +16,10 @@ import 'package:fluffychat/pages/device_settings/device_settings.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/invitation_selection/invitation_selection.dart';
 import 'package:fluffychat/pages/login/login.dart';
+import 'package:fluffychat/pages/moments/moments.dart';
 import 'package:fluffychat/pages/new_group/new_group.dart';
 import 'package:fluffychat/pages/new_private_chat/new_private_chat.dart';
+import 'package:fluffychat/pages/routes/routes.dart';
 import 'package:fluffychat/pages/settings/settings.dart';
 import 'package:fluffychat/pages/settings_3pid/settings_3pid.dart';
 import 'package:fluffychat/pages/settings_chat/settings_chat.dart';
@@ -62,6 +64,10 @@ abstract class AppRoutes {
   static final GlobalKey<NavigatorState> homeTabNavigatorKey = GlobalKey<NavigatorState>();
 
   static final GlobalKey<NavigatorState> circlesTabNavigatorKey = GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> momentsTabNavigatorKey = GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> routesTabNavigatorKey = GlobalKey<NavigatorState>();
 
   static final List<RouteBase> routes = [
     GoRoute(
@@ -503,6 +509,34 @@ abstract class AppRoutes {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: momentsTabNavigatorKey,
+          routes: [
+            GoRoute(
+              path: "/moments",
+              redirect: loggedOutRedirect,
+              pageBuilder: (context, state) => defaultPageBuilder(
+                context,
+                state,
+                const Moments(),
+              ),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: routesTabNavigatorKey,
+          routes: [
+            GoRoute(
+              path: "/routes",
+              redirect: loggedOutRedirect,
+              pageBuilder: (context, state) => defaultPageBuilder(
+                context,
+                state,
+                const Routes(),
+              ),
             ),
           ],
         ),
