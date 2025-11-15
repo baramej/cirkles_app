@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'config/setting_keys.dart';
 import 'utils/background_push.dart';
 import 'widgets/fluffy_chat_app.dart';
@@ -73,6 +74,13 @@ Future<void> startGui(List<Client> clients, SharedPreferences store) async {
   final firstClient = clients.firstOrNull;
   await firstClient?.roomsLoading;
   await firstClient?.accountDataLoading;
+
+  // Initialise Supabase
+  await Supabase.initialize(
+    url: "http://192.168.1.2",
+    anonKey:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
+  );
 
   runApp(FluffyChatApp(clients: clients, pincode: pin, store: store));
 }
