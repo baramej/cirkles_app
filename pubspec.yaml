@@ -39,10 +39,9 @@ dependencies:
   flutter_openssl_crypto: ^0.5.0
   flutter_secure_storage: ^9.2.4
   flutter_shortcuts_new: ^2.0.0
-  supabase_flutter: ^2.0.0
   flutter_vodozemac: ^0.2.2
-  flutter_web_auth_2: ^3.1.1 # Version 4 blocked by https://github.com/MixinNetwork/flutter-plugins/issues/379
   flutter_webrtc: ^1.2.0
+  flutter_web_auth_2: ^3.1.1 # Version 4 blocked by https://github.com/MixinNetwork/flutter-plugins/issues/379
   geolocator: ^14.0.2
   go_router: ^16.2.4
   handy_window: ^0.4.0
@@ -76,6 +75,7 @@ dependencies:
   slugify: ^2.0.0
   sqflite_common_ffi: ^2.3.6
   sqlcipher_flutter_libs: ^0.6.8
+  supabase_flutter: ^2.0.0
   swipe_to_action: ^0.3.0
   tor_detector_web: ^1.1.0
   unifiedpush: ^6.0.2

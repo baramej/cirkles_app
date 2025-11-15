@@ -49,7 +49,7 @@ class RegisterController extends State<Register> {
 
     final client = await matrix.getLoginClient();
     try {
-      final response = await client.register(
+      await client.register(
         username: usernameController.text,
         password: passwordController.text,
         kind: AccountKind.user,
