@@ -13,6 +13,7 @@ import 'package:fluffychat/pages/chat_search/chat_search_page.dart';
 import 'package:fluffychat/pages/circles/audio_room.dart';
 import 'package:fluffychat/pages/circles/rooms.dart';
 import 'package:fluffychat/pages/device_settings/device_settings.dart';
+import 'package:fluffychat/pages/home/home.dart';
 import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/invitation_selection/invitation_selection.dart';
 import 'package:fluffychat/pages/login/login.dart';
@@ -49,7 +50,7 @@ abstract class AppRoutes {
     BuildContext context,
     GoRouterState state,
   ) =>
-      Matrix.of(context).widget.clients.any((client) => client.isLogged()) ? '/rooms' : null;
+      Matrix.of(context).widget.clients.any((client) => client.isLogged()) ? '/main' : null;
 
   static FutureOr<String?> loggedOutRedirect(
     BuildContext context,
@@ -63,6 +64,8 @@ abstract class AppRoutes {
 
   static final GlobalKey<NavigatorState> homeTabNavigatorKey = GlobalKey<NavigatorState>();
 
+  static final GlobalKey<NavigatorState> chatTabNavigatorKey = GlobalKey<NavigatorState>();
+
   static final GlobalKey<NavigatorState> circlesTabNavigatorKey = GlobalKey<NavigatorState>();
 
   static final GlobalKey<NavigatorState> momentsTabNavigatorKey = GlobalKey<NavigatorState>();
@@ -73,7 +76,7 @@ abstract class AppRoutes {
     GoRoute(
       path: '/',
       redirect: (context, state) =>
-          Matrix.of(context).widget.clients.any((client) => client.isLogged()) ? '/rooms' : '/home',
+          Matrix.of(context).widget.clients.any((client) => client.isLogged()) ? '/main' : '/home',
     ),
     GoRoute(
       path: '/home',
@@ -135,6 +138,20 @@ abstract class AppRoutes {
       branches: [
         StatefulShellBranch(
           navigatorKey: homeTabNavigatorKey,
+          routes: [
+            GoRoute(
+              path: "/main",
+              redirect: loggedOutRedirect,
+              pageBuilder: (context, state) => defaultPageBuilder(
+                context,
+                state,
+                const Home(),
+              ),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          navigatorKey: chatTabNavigatorKey,
           routes: [
             GoRoute(
               path: '/rooms',

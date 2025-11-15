@@ -32,6 +32,10 @@ class _BottomNavLayoutState extends State<BottomNavLayout> {
         onDestinationSelected: shell.goBranch,
         destinations: [
           NavigationDestination(
+            icon: const Icon(Icons.home),
+            label: L10n.of(context).home,
+          ),
+          NavigationDestination(
             icon: const Icon(Icons.chat),
             label: L10n.of(context).chats,
           ),
