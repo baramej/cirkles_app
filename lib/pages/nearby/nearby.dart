@@ -196,11 +196,29 @@ class NearbyController extends State<Nearby> {
     });
   }
 
-  void navigateToRating(String driverId) {
-    context.push(
+  Future<void> navigateToRating(String driverId) async {
+    final l10n = L10n.of(context);
+    final result = await context.push<bool>(
       '${GoRouter.of(context).routeInformationProvider.value.uri.path}/rating',
       extra: {'driverId': driverId},
     );
+
+    if (result == true) {
+      setState(() {
+        loading = true;
+        error = null;
+      });
+
+      final nearbyDrivers = await getNearbyDrivers(currentPosition.latitude, currentPosition.longitude);
+      if (nearbyDrivers != null) {
+        setState(() {
+          loading = false;
+          drivers = nearbyDrivers;
+        });
+      } else {
+        setError(l10n.nearbyLoadDriversError);
+      }
+    }
   }
 
   void navigateToProfile() {

@@ -125,27 +125,46 @@ class RatingView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      L10n.of(context).nearbyRatingHeadline,
-                      style: theme.textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: 16),
-                    RatingBar.builder(
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      itemCount: 5,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
+                    if (controller.canRate) ...[
+                      Text(
+                        L10n.of(context).nearbyRatingHeadline,
+                        style: theme.textTheme.headlineMedium,
                       ),
-                      onRatingUpdate: controller.onRatingUpdate,
-                    ),
-                    const SizedBox(height: 16),
-                    FilledButton(
-                      onPressed: controller.rating < 1 || controller.rating > 5 ? null : controller.submit,
-                      child: Text(L10n.of(context).submit),
-                    ),
+                      const SizedBox(height: 16),
+                      RatingBar.builder(
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        itemCount: 5,
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: controller.onRatingUpdate,
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: controller.rating < 1 || controller.rating > 5 ? null : controller.submit,
+                        child: Text(L10n.of(context).submit),
+                      ),
+                    ],
+                    if (controller.previousRating != null) ...[
+                      Text(
+                        L10n.of(context).nearbyRatingHeadline,
+                        style: theme.textTheme.headlineMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      RatingBarIndicator(
+                        rating: double.parse(controller.previousRating!['rating'].toString()),
+                        direction: Axis.horizontal,
+                        itemCount: 5,
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
     );

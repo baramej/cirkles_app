@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/nearby/rating/rating_view.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,25 @@ class RatingController extends State<Rating> {
   bool loading = true;
   String? error;
   Map<String, dynamic>? myProfile;
+  List<Map<String, dynamic>> myRatings = [];
   double rating = 0;
+
+  bool get canRate => myRatings.any((e) => e['target_driver_id'] == widget.driverId) == false;
+
+  Map<String, dynamic>? get previousRating =>
+      myRatings.singleWhereOrNull((e) => e['target_driver_id'] == widget.driverId);
+
+  Future<List<Map<String, dynamic>>> getMyRatings() async {
+    try {
+      final uid = Supabase.instance.client.auth.currentUser?.id;
+      if (uid == null) throw Exception("Uid not found");
+
+      return await Supabase.instance.client.from('ratings').select().eq('rater_id', uid);
+    } catch (e) {
+      debugPrint("Error: $e");
+      return [];
+    }
+  }
 
   Future<Map<String, dynamic>?> getMyProfile(String driverId) async {
     try {
@@ -46,16 +65,19 @@ class RatingController extends State<Rating> {
       final l10n = L10n.of(context);
 
       final profile = await getMyProfile(widget.driverId);
+      final ratings = await getMyRatings();
 
       if (profile == null) {
         setState(() {
           loading = false;
           error = l10n.nearbyRatingError;
+          myRatings = ratings;
         });
       } else {
         setState(() {
           loading = false;
           myProfile = profile;
+          myRatings = ratings;
         });
       }
     });
@@ -95,7 +117,7 @@ class RatingController extends State<Rating> {
             content: Text(l10n.nearbyRatingSuccess),
           ),
         );
-        c.pop();
+        c.pop(true);
       });
     } catch (e) {
       debugPrint("Error rating driver: $e");
