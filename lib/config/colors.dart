@@ -15,6 +15,9 @@ abstract final class AppColors {
   ); // Figma rgba(255, 255, 255, 0.3)
   static const blackTransparent = Color(0x4D000000);
   static const red1 = Color(0xFFE74C3C);
+  static const blueGrey = Color(0xFFCBD5E1);
+  static const blueGreyCard = Color(0xFFC1CBD7);
+  static const blueGreyCardBorder = Color(0xFFBBC4D1);
 
   static const lightColorScheme = ColorScheme(
     brightness: Brightness.light,

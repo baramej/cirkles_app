@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/circles/audio_room.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,39 @@ class AudioRoomView extends StatelessWidget {
 
     return PopScope(
       canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) {
+          return;
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(L10n.of(context).circlesLeaveRoom),
+              content: Text(L10n.of(context).leaveRoomConfirmDialogTitle),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    controller.leaveRoom();
+                  },
+                  child: Text(L10n.of(context).leaveRoomConfirmDialogYes),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(L10n.of(context).leaveRoomConfirmDialogNo),
+                ),
+              ],
+            ),
+          );
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Public Room"),
+          title: Text(
+            controller.widget.params.name,
+          ),
         ),
         body: controller.loading
             ? const Center(
@@ -67,7 +98,7 @@ class AudioRoomView extends StatelessWidget {
                           const SizedBox(height: 16.0),
                           FilledButton(
                             onPressed: controller.leaveRoom,
-                            child: const Text("Leave Room"),
+                            child: Text(L10n.of(context).circlesLeaveRoom),
                           ),
                         ],
                       );

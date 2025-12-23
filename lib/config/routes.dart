@@ -18,8 +18,15 @@ import 'package:fluffychat/pages/homeserver_picker/homeserver_picker.dart';
 import 'package:fluffychat/pages/invitation_selection/invitation_selection.dart';
 import 'package:fluffychat/pages/login/login.dart';
 import 'package:fluffychat/pages/moments/moments.dart';
+import 'package:fluffychat/pages/nearby/create_profile.dart';
+import 'package:fluffychat/pages/nearby/my_profile/my_profile.dart';
+import 'package:fluffychat/pages/nearby/nearby.dart';
+import 'package:fluffychat/pages/nearby/rating/rating.dart';
+import 'package:fluffychat/pages/new_circle/new_circle.dart';
 import 'package:fluffychat/pages/new_group/new_group.dart';
 import 'package:fluffychat/pages/new_private_chat/new_private_chat.dart';
+import 'package:fluffychat/pages/new_route/new_route.dart';
+import 'package:fluffychat/pages/routes/route_detail.dart';
 import 'package:fluffychat/pages/routes/routes.dart';
 import 'package:fluffychat/pages/settings/settings.dart';
 import 'package:fluffychat/pages/settings_3pid/settings_3pid.dart';
@@ -147,6 +154,58 @@ abstract class AppRoutes {
                 state,
                 const Home(),
               ),
+              routes: [
+                GoRoute(
+                  path: "nearby",
+                  redirect: loggedOutRedirect,
+                  pageBuilder: (context, state) => defaultPageBuilder(
+                    context,
+                    state,
+                    const Nearby(),
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: "rating",
+                      redirect: loggedOutRedirect,
+                      pageBuilder: (context, state) {
+                        final data = state.extra as Map<String, dynamic>;
+
+                        return defaultPageBuilder(
+                          context,
+                          state,
+                          Rating(driverId: data['driverId']),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: "myProfile",
+                      redirect: loggedOutRedirect,
+                      pageBuilder: (context, state) {
+                        final data = state.extra as Map<String, dynamic>;
+
+                        return defaultPageBuilder(
+                          context,
+                          state,
+                          MyProfile(driverId: data['driverId']),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: "createProfile",
+                  redirect: loggedOutRedirect,
+                  pageBuilder: (context, state) {
+                    final data = state.extra as Map<String, dynamic>;
+
+                    return defaultPageBuilder(
+                      context,
+                      state,
+                      CreateProfile(lat: data['lat'], long: data['long']),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -517,13 +576,29 @@ abstract class AppRoutes {
                 GoRoute(
                   path: "/room",
                   redirect: loggedOutRedirect,
+                  pageBuilder: (context, state) {
+                    final data = state.extra as Map<String, dynamic>;
+
+                    return defaultPageBuilder(
+                      context,
+                      state,
+                      AudioRoom(
+                        params: AudioRoomParams(
+                          name: data['name'],
+                          accessToken: data['accessToken'],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                GoRoute(
+                  path: 'newcircle',
                   pageBuilder: (context, state) => defaultPageBuilder(
                     context,
                     state,
-                    AudioRoom(
-                      accessToken: state.extra as String,
-                    ),
+                    const NewCircle(),
                   ),
+                  redirect: loggedOutRedirect,
                 ),
               ],
             ),
@@ -554,6 +629,30 @@ abstract class AppRoutes {
                 state,
                 const Routes(),
               ),
+              routes: [
+                GoRoute(
+                  path: 'newroute',
+                  pageBuilder: (context, state) => defaultPageBuilder(
+                    context,
+                    state,
+                    const NewRoute(),
+                  ),
+                  redirect: loggedOutRedirect,
+                ),
+                GoRoute(
+                  path: ':routeId',
+                  pageBuilder: (context, state) {
+                    return defaultPageBuilder(
+                      context,
+                      state,
+                      RouteDetail(
+                        routeId: int.tryParse(state.pathParameters['routeId']!) ?? 0,
+                      ),
+                    );
+                  },
+                  redirect: loggedOutRedirect,
+                ),
+              ],
             ),
           ],
         ),

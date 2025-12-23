@@ -1,4 +1,5 @@
 import 'package:fluffychat/l10n/l10n.dart';
+import 'package:fluffychat/utils/supabase_auth.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix/matrix.dart';
@@ -49,7 +50,7 @@ class RegisterController extends State<Register> {
 
     final client = await matrix.getLoginClient();
     try {
-      await client.register(
+      final response = await client.register(
         username: usernameController.text,
         password: passwordController.text,
         kind: AccountKind.user,
@@ -57,6 +58,8 @@ class RegisterController extends State<Register> {
           type: "m.login.dummy",
         ),
       );
+
+      await SupabaseAuth.registerOrLogin(response.userId.localpart!);
     } on MatrixException catch (e) {
       setState(() {
         error = e.errorMessage;

@@ -299,11 +299,11 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         );
 
         if (state != LoginState.loggedIn) {
-          FluffyChatApp.router.go('/rooms');
+          FluffyChatApp.router.go('/main');
         }
       } else {
         FluffyChatApp.router
-            .go(state == LoginState.loggedIn ? '/rooms' : '/home');
+            .go(state == LoginState.loggedIn ? '/main' : '/home');
       }
     });
     onUiaRequest[name] ??= c.onUiaRequest.stream.listen(uiaRequestHandler);

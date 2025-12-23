@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
+import 'package:fluffychat/utils/supabase_auth.dart';
 import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
 import 'package:fluffychat/widgets/adaptive_dialogs/show_text_input_dialog.dart';
 import 'package:fluffychat/widgets/future_loading_dialog.dart';
@@ -69,7 +70,7 @@ class LoginController extends State<Login> {
         identifier = AuthenticationUserIdentifier(user: username);
       }
       final client = await matrix.getLoginClient();
-      await client.login(
+      final response = await client.login(
         LoginType.mLoginPassword,
         identifier: identifier,
         // To stay compatible with older server versions
@@ -78,6 +79,8 @@ class LoginController extends State<Login> {
         password: passwordController.text,
         initialDeviceDisplayName: PlatformInfos.clientName,
       );
+
+      await SupabaseAuth.registerOrLogin(response.userId.localpart!);
     } on MatrixException catch (exception) {
       setState(() => passwordError = exception.errorMessage);
       return setState(() => loading = false);

@@ -9,8 +9,8 @@ abstract class AppConfig {
   static String? _applicationWelcomeMessage;
 
   static String? get applicationWelcomeMessage => _applicationWelcomeMessage;
-  //static String _defaultHomeserver = 'matrix.cirkles.app';
-  static String _defaultHomeserver = 'encephalographically-wirespun-vaughn.ngrok-free.dev';
+  static String _defaultHomeserver = 'matrix.cirkles.app';
+  //static String _defaultHomeserver = 'encephalographically-wirespun-vaughn.ngrok-free.dev';
 
   static String get defaultHomeserver => _defaultHomeserver;
   static double fontSizeFactor = 1;
@@ -72,6 +72,13 @@ abstract class AppConfig {
     host: 'servers.joinmatrix.org',
     path: 'servers.json',
   );
+  static const String supabaseUrl = 'https://139-162-148-208.ip.linodeusercontent.com';
+  static const String supabaseAnonKey =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzY1MTUyMDAwLCJleHAiOjE5MjI5MTg0MDB9.bIZaH2Ew7tpxt7B0QlN_aakowr6EjoK7c0GYr3_Jz3k';
+  static const String livekitTokenServerUrl = 'https://livekitapi.cirkles.app/api/v1/getToken';
+  static const String livekitServerUrl = 'wss://cirkles-v4y8ipjp.livekit.cloud';
+  static const String azuraCastServerUrl = 'https://139-162-143-50.ip.linodeusercontent.com';
+  static const String azuraCastApiKey = 'c86cfe8a7b3ac365:02c4a4e17a736ba02198aa2864b1e686';
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {

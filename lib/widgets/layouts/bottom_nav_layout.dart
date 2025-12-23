@@ -40,15 +40,15 @@ class _BottomNavLayoutState extends State<BottomNavLayout> {
             label: L10n.of(context).chats,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.circle_outlined),
+            icon: const Icon(Icons.people),
             label: L10n.of(context).circles,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.music_note),
+            icon: const Icon(Icons.camera),
             label: L10n.of(context).moments,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.navigation),
+            icon: const Icon(Icons.map),
             label: L10n.of(context).routes,
           ),
         ],
