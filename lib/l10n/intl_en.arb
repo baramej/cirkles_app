@@ -3480,5 +3480,9 @@
   "leaveRoomConfirmDialogTitle": "You are about to leave this room? Are you sure?",
   "leaveRoomConfirmDialogYes": "Yes",
   "leaveRoomConfirmDialogNo": "No",
-  "circlesLeaveRoom": "Leave Room"
+  "circlesLeaveRoom": "Leave Room",
+  "nearbyCreateProfileConfirmDialogTitle": "Confirm",
+  "nearbyCreateProfileConfirmDialogBody": "You can add your car only once make sure to add your details correctly. Are your details correct?",
+  "nearbyCreateProfileConfirmDialogYes": "Yes",
+  "nearbyCreateProfileConfirmDialogNo": "No"
 }
