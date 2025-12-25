@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../config/secrets.dart';
+
 class SupabaseAuth {
-  static const secret = "lDAgFv9ANcmPpra9ipt3Obyhm";
+  static const secret = Secrets.kSupabaseUserPasswordSecret;
 
   static String generatePassword(String matrixUserId) {
     final input = utf8.encode('$matrixUserId$secret');

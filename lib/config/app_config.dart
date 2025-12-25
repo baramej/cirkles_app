@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:matrix/matrix.dart';
 
+import 'secrets.dart';
+
 abstract class AppConfig {
   static String _applicationName = 'Cirkles';
 
@@ -73,12 +75,11 @@ abstract class AppConfig {
     path: 'servers.json',
   );
   static const String supabaseUrl = 'https://139-162-148-208.ip.linodeusercontent.com';
-  static const String supabaseAnonKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzY1MTUyMDAwLCJleHAiOjE5MjI5MTg0MDB9.bIZaH2Ew7tpxt7B0QlN_aakowr6EjoK7c0GYr3_Jz3k';
+  static const String supabaseAnonKey = Secrets.kSupabaseAnonKey;
   static const String livekitTokenServerUrl = 'https://livekitapi.cirkles.app/api/v1/getToken';
   static const String livekitServerUrl = 'wss://cirkles-v4y8ipjp.livekit.cloud';
   static const String azuraCastServerUrl = 'https://139-162-143-50.ip.linodeusercontent.com';
-  static const String azuraCastApiKey = 'c86cfe8a7b3ac365:02c4a4e17a736ba02198aa2864b1e686';
+  static const String azuraCastApiKey = Secrets.kAzuraCastApiKey;
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {
