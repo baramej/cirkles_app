@@ -71,22 +71,65 @@ class CreateProfileView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        TextFormField(
-                          controller: controller.colorController,
-                          validator: (value) =>
-                              value == null || value.isEmpty ? L10n.of(context).nearbyCreateProfileColorRequired : null,
+                        DropdownButtonFormField<String>(
+                          items: carColors
+                              .map(
+                                (e) => DropdownMenuItem<String>(
+                                  value: e['name'],
+                                  child: Text(
+                                    "${Localizations.localeOf(context).languageCode == 'ar' ? e['nameAr'] : e['name']}",
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          validator: (_) => controller.colorController.text.trim().isEmpty
+                              ? L10n.of(context).nearbyCreateProfileColorRequired
+                              : null,
+                          onChanged: (value) {
+                            if (value != null && value.trim().isNotEmpty) {
+                              controller.colorController.text = value;
+                            }
+                          },
                           decoration: InputDecoration(
                             labelText: L10n.of(context).nearbyCreateProfileColor,
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        TextFormField(
-                          controller: controller.plateController,
-                          validator: (value) =>
-                              value == null || value.isEmpty ? L10n.of(context).nearbyCreateProfilePlateRequired : null,
-                          decoration: InputDecoration(
-                            labelText: L10n.of(context).nearbyCreateProfilePlate,
-                          ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              child: DropdownButtonFormField<String>(
+                                initialValue: controller.plateCode,
+                                items: plateCodes
+                                    .map(
+                                      (e) => DropdownMenuItem<String>(
+                                        value: e,
+                                        child: Text(e),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    controller.setPlateCode(value);
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                controller: controller.plateController,
+                                keyboardType: TextInputType.number,
+                                validator: (value) => value == null || value.isEmpty
+                                    ? L10n.of(context).nearbyCreateProfilePlateRequired
+                                    : null,
+                                decoration: InputDecoration(
+                                  labelText: L10n.of(context).nearbyCreateProfilePlate,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 16.0),
                         Text(
