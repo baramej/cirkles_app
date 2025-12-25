@@ -19,6 +19,7 @@ dependencies:
   cross_file: ^0.3.4+2
   crypto: ^3.0.7
   cupertino_icons: any
+  dart_resend: ^1.0.1
   desktop_drop: ^0.6.1
   desktop_notifications: ^0.6.3
   device_info_plus: ^11.5.0

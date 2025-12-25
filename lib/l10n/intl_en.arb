@@ -3484,5 +3484,19 @@
   "nearbyCreateProfileConfirmDialogTitle": "Confirm",
   "nearbyCreateProfileConfirmDialogBody": "You can add your car only once make sure to add your details correctly. Are your details correct?",
   "nearbyCreateProfileConfirmDialogYes": "Yes",
-  "nearbyCreateProfileConfirmDialogNo": "No"
+  "nearbyCreateProfileConfirmDialogNo": "No",
+  "settingsSupport": "Support",
+  "settingsSupportTitle": "How can we help you today?",
+  "settingsSupportSubtitle": "Fill out the form below. We usually reply within 24 hours.",
+  "settingsSupportYourEmail": "Your email",
+  "settingsSupportYourEmailRequired": "Email is required",
+  "settingsSupportSubject": "Subject",
+  "settingsSupportSubjectRequired": "Subject is required",
+  "settingsSupportSubjectPlaceholder": "Brief summary of the issue",
+  "settingsSupportDescription": "Description",
+  "settingsSupportDescriptionRequired": "Description is required",
+  "settingsSupportDescriptionPlaceholder": "Please describe your issue in detail...",
+  "settingsSupportSubmit": "Send Message",
+  "settingsSupportError": "Could not send message. Try again.",
+  "settingsSupportSuccess": "Your message has been sent successfully."
 }

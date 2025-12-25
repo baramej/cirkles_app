@@ -39,6 +39,7 @@ import 'package:fluffychat/pages/settings_notifications/settings_notifications.d
 import 'package:fluffychat/pages/settings_password/settings_password.dart';
 import 'package:fluffychat/pages/settings_security/settings_security.dart';
 import 'package:fluffychat/pages/settings_style/settings_style.dart';
+import 'package:fluffychat/pages/settings_support/settings_support.dart';
 import 'package:fluffychat/widgets/config_viewer.dart';
 import 'package:fluffychat/widgets/layouts/bottom_nav_layout.dart';
 import 'package:fluffychat/widgets/layouts/empty_page.dart';
@@ -310,6 +311,15 @@ abstract class AppRoutes {
                             context,
                             state,
                             const SettingsStyle(),
+                          ),
+                          redirect: loggedOutRedirect,
+                        ),
+                        GoRoute(
+                          path: 'support',
+                          pageBuilder: (context, state) => defaultPageBuilder(
+                            context,
+                            state,
+                            const SettingsSupport(),
                           ),
                           redirect: loggedOutRedirect,
                         ),

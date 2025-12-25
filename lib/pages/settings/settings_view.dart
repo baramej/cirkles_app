@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-
-import 'package:go_router/go_router.dart';
-import 'package:matrix/matrix.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/l10n/l10n.dart';
@@ -12,6 +6,11 @@ import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:fluffychat/widgets/navigation_rail.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:matrix/matrix.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 import '../../widgets/mxc_image_viewer.dart';
 import 'settings.dart';
 
@@ -24,8 +23,7 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final showChatBackupBanner = controller.showChatBackupBanner;
-    final activeRoute =
-        GoRouter.of(context).routeInformationProvider.value.uri.path;
+    final activeRoute = GoRouter.of(context).routeInformationProvider.value.uri.path;
     final accountManageUrl = Matrix.of(context)
         .client
         .wellKnown
@@ -67,10 +65,8 @@ class SettingsView extends StatelessWidget {
                     builder: (context, snapshot) {
                       final profile = snapshot.data;
                       final avatar = profile?.avatarUrl;
-                      final mxid = Matrix.of(context).client.userID?.localpart ??
-                          L10n.of(context).user;
-                      final displayname =
-                          profile?.displayName ?? mxid.localpart ?? mxid;
+                      final mxid = Matrix.of(context).client.userID?.localpart ?? L10n.of(context).user;
+                      final displayname = profile?.displayName ?? mxid.localpart ?? mxid;
                       return Row(
                         children: [
                           Padding(
@@ -84,8 +80,7 @@ class SettingsView extends StatelessWidget {
                                   onTap: avatar != null
                                       ? () => showDialog(
                                             context: context,
-                                            builder: (_) =>
-                                                MxcImageViewer(avatar),
+                                            builder: (_) => MxcImageViewer(avatar),
                                           )
                                       : null,
                                 ),
@@ -117,8 +112,7 @@ class SettingsView extends StatelessWidget {
                                     size: 16,
                                   ),
                                   style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        theme.colorScheme.onSurface,
+                                    foregroundColor: theme.colorScheme.onSurface,
                                     iconColor: theme.colorScheme.onSurface,
                                   ),
                                   label: Text(
@@ -131,15 +125,13 @@ class SettingsView extends StatelessWidget {
                                   ),
                                 ),
                                 TextButton.icon(
-                                  onPressed: () =>
-                                      FluffyShare.share(mxid, context),
+                                  onPressed: () => FluffyShare.share(mxid, context),
                                   icon: const Icon(
                                     Icons.copy_outlined,
                                     size: 14,
                                   ),
                                   style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        theme.colorScheme.secondary,
+                                    foregroundColor: theme.colorScheme.secondary,
                                     iconColor: theme.colorScheme.secondary,
                                   ),
                                   label: Text(
@@ -193,12 +185,19 @@ class SettingsView extends StatelessWidget {
                   //   onTap: () => context.go('/rooms/settings/style'),
                   // ),
                   ListTile(
+                    leading: const Icon(Icons.support_agent),
+                    title: Text(L10n.of(context).settingsSupport),
+                    tileColor: activeRoute.startsWith('/rooms/settings/support')
+                        ? theme.colorScheme.surfaceContainerHigh
+                        : null,
+                    onTap: () => context.go('/rooms/settings/support'),
+                  ),
+                  ListTile(
                     leading: const Icon(Icons.notifications_outlined),
                     title: Text(L10n.of(context).notifications),
-                    tileColor:
-                        activeRoute.startsWith('/rooms/settings/notifications')
-                            ? theme.colorScheme.surfaceContainerHigh
-                            : null,
+                    tileColor: activeRoute.startsWith('/rooms/settings/notifications')
+                        ? theme.colorScheme.surfaceContainerHigh
+                        : null,
                     onTap: () => context.go('/rooms/settings/notifications'),
                   ),
                   ListTile(
@@ -213,18 +212,16 @@ class SettingsView extends StatelessWidget {
                     leading: const Icon(Icons.forum_outlined),
                     title: Text(L10n.of(context).chat),
                     onTap: () => context.go('/rooms/settings/chat'),
-                    tileColor: activeRoute.startsWith('/rooms/settings/chat')
-                        ? theme.colorScheme.surfaceContainerHigh
-                        : null,
+                    tileColor:
+                        activeRoute.startsWith('/rooms/settings/chat') ? theme.colorScheme.surfaceContainerHigh : null,
                   ),
                   ListTile(
                     leading: const Icon(Icons.shield_outlined),
                     title: Text(L10n.of(context).security),
                     onTap: () => context.go('/rooms/settings/security'),
-                    tileColor:
-                        activeRoute.startsWith('/rooms/settings/security')
-                            ? theme.colorScheme.surfaceContainerHigh
-                            : null,
+                    tileColor: activeRoute.startsWith('/rooms/settings/security')
+                        ? theme.colorScheme.surfaceContainerHigh
+                        : null,
                   ),
                   Divider(color: theme.dividerColor),
                   // ListTile(
