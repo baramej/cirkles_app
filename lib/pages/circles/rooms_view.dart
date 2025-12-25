@@ -17,7 +17,7 @@ class RoomsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(L10n.of(context).connectOnTheRoad),
+        title: Text(L10n.of(context).circles),
         actions: [
           if (controller.myCircles.isEmpty)
             IconButton.filled(
@@ -43,6 +43,11 @@ class RoomsView extends StatelessWidget {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Text(
+                        L10n.of(context).circlesHeadline,
+                        style: theme.textTheme.headlineMedium,
+                      ),
+                      const SizedBox(height: 16),
                       Text(
                         L10n.of(context).myCircles,
                         style: theme.textTheme.titleLarge,
