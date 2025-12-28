@@ -172,7 +172,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
             );
             _registerSubs(_loginClientCandidate!.clientName);
             _loginClientCandidate = null;
-            FluffyChatApp.router.go('/rooms');
+        FluffyChatApp.router.go('/main');
           });
     if (widget.clients.isEmpty) widget.clients.add(candidate);
     return candidate;
