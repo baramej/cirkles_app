@@ -1,4 +1,5 @@
 import 'package:dart_resend/dart_resend.dart';
+import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/secrets.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/settings_support/settings_support_view.dart';
@@ -34,10 +35,10 @@ class SettingsSupportController extends State<SettingsSupport> {
       final resend = Resend.initialize(apiKey: Secrets.kResendApiKey).client;
 
       final response = await resend.email.sendEmail(
-        from: 'Cirkles Support <support@cirkles.app>',
-        to: <String>[emailController.text],
+        from: AppConfig.supportEmailFrom,
+        to: AppConfig.supportEmailTo,
         subject: subjectController.text,
-        text: descriptionController.text,
+        text: 'User Email: ${emailController.text}\nDescription: ${descriptionController.text}',
       );
 
       response.fold(

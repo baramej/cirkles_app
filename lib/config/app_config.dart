@@ -80,6 +80,8 @@ abstract class AppConfig {
   static const String livekitServerUrl = 'wss://cirkles-v4y8ipjp.livekit.cloud';
   static const String azuraCastServerUrl = 'https://139-162-143-50.ip.linodeusercontent.com';
   static const String azuraCastApiKey = Secrets.kAzuraCastApiKey;
+  static const String supportEmailFrom = 'Cirkles Support <support@cirkles.app>';
+  static const List<String> supportEmailTo = ['ali@baramej.io'];
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {
