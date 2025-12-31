@@ -4,11 +4,17 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import android.view.WindowManager
 
 class MainActivity : FlutterActivity() {
 
-    override fun attachBaseContext(base: Context) {
+    /*override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
+    }*/
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
 
