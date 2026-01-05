@@ -40,6 +40,7 @@ import 'package:fluffychat/pages/settings_password/settings_password.dart';
 import 'package:fluffychat/pages/settings_security/settings_security.dart';
 import 'package:fluffychat/pages/settings_style/settings_style.dart';
 import 'package:fluffychat/pages/settings_support/settings_support.dart';
+import 'package:fluffychat/pages/verify_email/verify_email.dart';
 import 'package:fluffychat/widgets/config_viewer.dart';
 import 'package:fluffychat/widgets/layouts/bottom_nav_layout.dart';
 import 'package:fluffychat/widgets/layouts/empty_page.dart';
@@ -131,6 +132,14 @@ abstract class AppRoutes {
         const ConfigViewer(),
       ),
     ),
+    GoRoute(
+      path: '/configs',
+      pageBuilder: (context, state) => defaultPageBuilder(
+        context,
+        state,
+        const ConfigViewer(),
+      ),
+    ),
     StatefulShellRoute.indexedStack(
       // Never use a transition on the shell route. Changing the PageBuilder
       // here based on a MediaQuery causes the child to briefly be rendered
@@ -156,6 +165,15 @@ abstract class AppRoutes {
                 const Home(),
               ),
               routes: [
+                GoRoute(
+                  path: 'verifyEmail',
+                  pageBuilder: (context, state) => defaultPageBuilder(
+                    context,
+                    state,
+                    const VerifyEmail(),
+                  ),
+                  redirect: loggedOutRedirect,
+                ),
                 GoRoute(
                   path: "nearby",
                   redirect: loggedOutRedirect,

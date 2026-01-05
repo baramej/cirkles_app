@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/utils/client_manager.dart';
+import 'package:fluffychat/utils/email_validation.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
 import 'package:fluffychat/utils/supabase_auth.dart';
 import 'package:flutter/material.dart';
@@ -79,11 +80,13 @@ Future<void> startGui(List<Client> clients, SharedPreferences store) async {
     anonKey: AppConfig.supabaseAnonKey,
   );
 
+  final emailValidation = EmailValidation(firstClient);
   if (firstClient?.isLogged() == true) {
     await SupabaseAuth.registerOrLogin(firstClient!.userID!.localpart!);
+    await emailValidation.init();
   }
 
-  runApp(FluffyChatApp(clients: clients, pincode: pin, store: store));
+  runApp(FluffyChatApp(clients: clients, pincode: pin, store: store, emailValidation: emailValidation));
 }
 
 /// Watches the lifecycle changes to start the application when it

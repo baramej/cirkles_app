@@ -1,4 +1,5 @@
 import 'package:fluffychat/pages/home/home_view.dart';
+import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +33,16 @@ class HomeController extends State<Home> {
 
   void navigateToNearby() {
     context.go('${GoRouter.of(context).routeInformationProvider.value.uri.path}/nearby');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Matrix.of(context).widget.emailValidation?.isEmailVerified == false) {
+        context.go("/main/verifyEmail");
+      }
+    });
   }
 
   @override

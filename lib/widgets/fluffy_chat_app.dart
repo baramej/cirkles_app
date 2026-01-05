@@ -1,6 +1,7 @@
 import 'package:fluffychat/config/routes.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/l10n/l10n.dart';
+import 'package:fluffychat/utils/email_validation.dart';
 import 'package:fluffychat/widgets/app_lock.dart';
 import 'package:fluffychat/widgets/theme_builder.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,14 @@ class FluffyChatApp extends StatelessWidget {
   final List<Client> clients;
   final String? pincode;
   final SharedPreferences store;
+  final EmailValidation? emailValidation;
 
   const FluffyChatApp({
     super.key,
     this.testWidget,
     required this.clients,
     required this.store,
+    required this.emailValidation,
     this.pincode,
   });
 
@@ -60,6 +63,7 @@ class FluffyChatApp extends StatelessWidget {
           child: Matrix(
             clients: clients,
             store: store,
+            emailValidation: emailValidation,
             child: testWidget ?? child,
           ),
         ),

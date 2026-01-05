@@ -3498,5 +3498,16 @@
   "settingsSupportDescriptionPlaceholder": "Please describe your issue in detail...",
   "settingsSupportSubmit": "Send Message",
   "settingsSupportError": "Could not send message. Try again.",
-  "settingsSupportSuccess": "Your message has been sent successfully."
+  "settingsSupportSuccess": "Your message has been sent successfully.",
+  "registerEmail": "Email",
+  "registerEmailRequired": "Email is required",
+  "registerEmailInvalid": "Email is invalid",
+  "pleaseEnterYourEmail": "Please enter your email",
+  "registerEmailValidationText": "We’ve sent a verification link to your email address. Please open your email and click the link to complete registration.",
+  "registerEmailValidationButtonText": "I’ve verified",
+  "registerResendValidationText": "Didn’t receive the email?",
+  "registerResendValidationEmailButtonText": "Resend email",
+  "registerVerifyEmail": "Verify Email",
+  "registerVerifyEmailHeadline": "You need to verify your email. Your email will be used to reset your password.",
+  "registerVerifyEmailSkipForNow": "Skip for now"
 }
