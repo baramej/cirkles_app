@@ -6,6 +6,7 @@ import 'package:fluffychat/widgets/avatar.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix/matrix.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({
@@ -156,6 +157,26 @@ class HomeView extends StatelessWidget {
                 subtitle: L10n.of(context).homeFindLocalPaths,
               ),
             ],
+          ),
+          const SizedBox(height: 16.0),
+          ListTile(
+            onTap: () async {
+              final url = Uri.parse("https://baramej.io");
+              if (await canLaunchUrl(url)) {
+                launchUrl(url);
+              }
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(HomeContainer.radius),
+            ),
+            title: Align(
+              alignment: AlignmentDirectional.topStart,
+              child: Image.asset(
+                'assets/baramej-logo.png',
+                width: 100,
+              ),
+            ),
+            subtitle: Text(L10n.of(context).poweredByBaramej),
           ),
         ],
       ),

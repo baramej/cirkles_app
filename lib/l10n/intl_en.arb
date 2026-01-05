@@ -3509,5 +3509,6 @@
   "registerResendValidationEmailButtonText": "Resend email",
   "registerVerifyEmail": "Verify Email",
   "registerVerifyEmailHeadline": "You need to verify your email. Your email will be used to reset your password.",
-  "registerVerifyEmailSkipForNow": "Skip for now"
+  "registerVerifyEmailSkipForNow": "Skip for now",
+  "poweredByBaramej": "Powered by Baramej®"
 }
