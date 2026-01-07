@@ -1,8 +1,8 @@
 import express from "express";
 import { AccessToken } from "livekit-server-sdk";
 
-const API_KEY = "API7ESYHEEBKv3P";
-const API_SECRET = "ZxeSBbVC1r2p4RVVxVYNEPSfFz2NoJeXENhqh2EeI3vC";
+const API_KEY = "<your-api-key-here>";
+const API_SECRET = "<your-api-secret-here>";
 
 const createToken = async (room, username) => {
 	const at = new AccessToken(API_KEY, API_SECRET, {
