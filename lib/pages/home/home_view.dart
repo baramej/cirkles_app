@@ -169,14 +169,11 @@ class HomeView extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(HomeContainer.radius),
             ),
-            title: Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Image.asset(
-                'assets/baramej-logo.png',
-                width: 100,
-              ),
+            title: Text(
+              L10n.of(context).poweredByBaramej,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.labelSmall,
             ),
-            subtitle: Text(L10n.of(context).poweredByBaramej),
           ),
         ],
       ),
