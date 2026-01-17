@@ -26,8 +26,11 @@ class RegisterController extends State<Register> {
   String? error;
   bool loading = false;
   bool showPassword = false;
+  bool isAgree = false;
 
   void toggleShowPassword() => setState(() => showPassword = !loading && !showPassword);
+
+  void toggleIsAgree() => setState(() => isAgree = !isAgree);
 
   Future<void> register() async {
     final matrix = Matrix.of(context);

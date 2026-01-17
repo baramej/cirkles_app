@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'register.dart';
 
@@ -68,13 +69,28 @@ class RegisterView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
+          CheckboxListTile.adaptive(
+            value: controller.isAgree,
+            onChanged: (_) => controller.toggleIsAgree(),
+            title: Text(L10n.of(context).registerEula),
+          ),
+          const SizedBox(height: 16.0),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.colorScheme.primary,
               foregroundColor: theme.colorScheme.onPrimary,
             ),
-            onPressed: controller.loading ? null : controller.register,
+            onPressed: controller.loading || !controller.isAgree ? null : controller.register,
             child: controller.loading ? const LinearProgressIndicator() : Text(L10n.of(context).register),
+          ),
+          TextButton(
+            onPressed: () async {
+              final url = Uri.parse("https://github.com/baramej/cirkles_app/wiki/Terms-&-Conditions");
+              if (await canLaunchUrl(url)) {
+                launchUrl(url);
+              }
+            },
+            child: Text(L10n.of(context).registerTermsOfUse),
           ),
         ],
       ),
