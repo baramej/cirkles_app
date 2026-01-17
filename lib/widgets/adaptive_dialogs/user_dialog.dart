@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -197,7 +198,7 @@ class UserDialog extends StatelessWidget {
             },
             child: Text(
               L10n.of(context).ignoreUser,
-              style: TextStyle(color: theme.colorScheme.error),
+              style: const TextStyle(color: AppColors.red1),
             ),
           ),
         ],

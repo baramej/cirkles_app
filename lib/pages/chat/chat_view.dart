@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:fluffychat/config/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:badges/badges.dart';
@@ -63,6 +64,7 @@ class ChatView extends StatelessWidget {
         if (controller.selectedEvents.length == 1)
           PopupMenuButton<_EventContextAction>(
             useRootNavigator: true,
+            iconColor: AppColors.white1,
             onSelected: (action) {
               switch (action) {
                 case _EventContextAction.info:
