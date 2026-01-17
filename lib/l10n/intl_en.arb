@@ -3510,5 +3510,7 @@
   "registerVerifyEmail": "Verify Email",
   "registerVerifyEmailHeadline": "You need to verify your email. Your email will be used to reset your password.",
   "registerVerifyEmailSkipForNow": "Skip for now",
-  "poweredByBaramej": "Powered by Baramej®"
+  "poweredByBaramej": "Powered by Baramej®",
+  "registerEula": "I agree to the Terms of Use and acknowledge that objectionable or abusive content is not allowed and may result in account removal.",
+  "registerTermsOfUse": "Read Terms of Use here"
 }
