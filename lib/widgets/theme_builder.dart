@@ -33,7 +33,7 @@ class ThemeController extends State<ThemeBuilder> {
   ThemeMode? _themeMode;
   Color? _primaryColor;
 
-  ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
+  ThemeMode get themeMode => _themeMode ?? ThemeMode.light;
 
   Color? get primaryColor => _primaryColor;
 
