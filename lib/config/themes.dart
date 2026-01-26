@@ -46,6 +46,7 @@ abstract class FluffyThemes {
     Brightness brightness, [
     Color? seed,
   ]) {
+    brightness = Brightness.light;
     final colorScheme = brightness == Brightness.light ? AppColors.lightColorScheme : AppColors.darkColorScheme;
     final isColumnMode = FluffyThemes.isColumnMode(context);
     return ThemeData(
