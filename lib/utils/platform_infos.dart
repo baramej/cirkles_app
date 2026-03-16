@@ -52,11 +52,11 @@ abstract class PlatformInfos {
       context: context,
       children: [
         Text('Version: $version'),
-        TextButton.icon(
-          onPressed: () => launchUrlString(AppConfig.sourceCodeUrl),
-          icon: const Icon(Icons.source_outlined),
-          label: Text(L10n.of(context).sourceCode),
-        ),
+        // TextButton.icon(
+        //   onPressed: () => launchUrlString(AppConfig.sourceCodeUrl),
+        //   icon: const Icon(Icons.source_outlined),
+        //   label: Text(L10n.of(context).sourceCode),
+        // ),
         // Builder(
         //   builder: (innerContext) {
         //     return TextButton.icon(

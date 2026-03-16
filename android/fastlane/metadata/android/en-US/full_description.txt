@@ -1,32 +1,35 @@
-FluffyChat is an open, nonprofit and cute Matrix messenger app for Ubuntu Touch, Android and iOS.
+Drive smarter. Connect instantly. Discover Oman like never before.
 
-Open
-Opensource and open development where everyone can join.
+This app is a community-driven communication and discovery platform designed especially for people on the road. Built as a fork of FluffyChat and enhanced with powerful, location-aware features, it helps drivers connect, communicate, and explore — all in one place.
 
-Nonprofit
-FluffyChat is donation funded.
+🚗 Cirkles – Connect on the Road
 
-Cute ♥
-Cute design and many theme settings including a dark mode. 
+Cirkles lets you connect with people driving on the same road or nearby areas. Whether you want to give a heads-up about traffic, start a friendly conversation, or simply feel less alone on long drives, Cirkles creates a real-time local driving community around you.
 
-One-to-one and group chats
-Unlimited groups and direct chats.
+⭐ Rate Other Drivers
 
-Easy
-FluffyChat is made as simple to use as possible.
+See nearby drivers on a live map and share feedback based on your experience. This feature promotes safer and more responsible driving by encouraging positive behavior and accountability within the community.
 
-Free
-Free to use for everyone without ads.
+📻 Moments – Live Radio, Anytime
 
-Decentralized
-There is no "FluffyChat server" you are forced to use. Use the server you find trustworthy or host your own.
+Tune in to live radio stations while you drive. Moments brings entertainment, news, and music together so your journey is never boring — whether you’re commuting or exploring new routes.
 
-Compatible
-Compatible with Element, Fractal, Nheko and all Matrix messengers.
+🗺️ Routes – Discover Scenic Drives in Oman
 
+Explore curated scenic routes across Oman. Find beautiful drives, hidden gems, and recommended roads for weekend trips or long adventures. Perfect for road-trip lovers and explorers.
 
-FluffyChat comes with a dream
+💬 Chat with Friends
 
-Imagine a world where everyone can choose the messenger they like and is still able to chat with all of their friends.
-A world where there are no companies spying on you when you send selfies to friends and your loved.
-And a world where apps are made for fluffyness and not for profit. ♥
+Stay connected with your friends through secure, real-time messaging. Built on a reliable chat foundation, the app ensures smooth conversations whether you’re on the move or parked.
+
+🔒 Privacy & Performance
+
+Secure messaging
+
+Location features designed with user control in mind
+
+Optimized for mobile performance
+
+Whether you’re commuting daily or exploring Oman’s breathtaking landscapes, this app turns every drive into a connected experience.
+
+Download now and be part of a smarter, friendlier driving community.

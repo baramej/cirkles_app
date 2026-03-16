@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -43,10 +44,12 @@ class RecordingDialogState extends State<RecordingDialog> {
           // Web seems to create webm instead of ogg when using opus encoder
           // which does not play on iOS right now. So we use wav for now:
           ? AudioEncoder.wav
-          // Everywhere else we use opus if supported by the platform:
-          : await _audioRecorder.isEncoderSupported(AudioEncoder.opus)
-              ? AudioEncoder.opus
-              : AudioEncoder.aacLc;
+          : Platform.isIOS
+              ? AudioEncoder.aacLc
+              // Everywhere else we use opus if supported by the platform:
+              : await _audioRecorder.isEncoderSupported(AudioEncoder.opus)
+                  ? AudioEncoder.opus
+                  : AudioEncoder.aacLc;
       fileName =
           'recording${DateTime.now().microsecondsSinceEpoch}.${codec.fileExtension}';
       String? path;

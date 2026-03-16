@@ -54,6 +54,7 @@ ios/Flutter/.last_build_id
 ios/Podfile.lock
 ios/Runner.ipa
 ios/Runner/GoogleServices-Info.plist
+ios/gc_keys.json
 
 /windows/out
 /winuwp/out

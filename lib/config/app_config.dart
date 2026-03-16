@@ -65,7 +65,7 @@ abstract class AppConfig {
   static const String deepLinkPrefix = 'cirkles.app://chat/';
   static const String schemePrefix = 'matrix:';
   static const String pushNotificationsChannelId = 'fluffychat_push';
-  static const String pushNotificationsAppId = 'chat.fluffy.fluffychat';
+  static const String pushNotificationsAppId = 'cirkles.app';
   static const double borderRadius = 18.0;
   static const double columnWidth = 360.0;
   static final Uri homeserverList = Uri(

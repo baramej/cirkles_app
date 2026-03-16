@@ -12,5 +12,9 @@
 	<array>
 		<string>group.cirkles.app</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)cirkles.app</string>
+	</array>
 </dict>
 </plist>

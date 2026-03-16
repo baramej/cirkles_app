@@ -3,6 +3,7 @@ import 'package:fluffychat/pages/circles/audio_room_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:livekit_client/livekit_client.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class AudioRoomParams {
   final String name;
@@ -48,6 +49,7 @@ class AudioRoomController extends State<AudioRoom> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       try {
+        await WakelockPlus.enable();
         await room.connect(AppConfig.livekitServerUrl, widget.params.accessToken);
         room.localParticipant?.setMicrophoneEnabled(true);
         setState(() {
@@ -89,6 +91,7 @@ class AudioRoomController extends State<AudioRoom> {
 
   @override
   void dispose() {
+    WakelockPlus.disable();
     room.disconnect();
     super.dispose();
   }

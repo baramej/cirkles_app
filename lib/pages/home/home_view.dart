@@ -37,23 +37,26 @@ class HomeView extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          FutureBuilder<Profile>(
-            future: matrix.client.isLogged() ? matrix.client.fetchOwnProfile() : null,
-            builder: (context, snapshot) {
-              return Material(
-                clipBehavior: Clip.hardEdge,
-                borderRadius: BorderRadius.circular(99),
-                color: Colors.transparent,
-                child: Center(
-                  child: Avatar(
-                    onTap: controller.navigateToSettings,
-                    mxContent: snapshot.data?.avatarUrl,
-                    name: snapshot.data?.displayName ?? matrix.client.userID?.localpart,
-                    size: 42,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: FutureBuilder<Profile>(
+              future: matrix.client.isLogged() ? matrix.client.fetchOwnProfile() : null,
+              builder: (context, snapshot) {
+                return Material(
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(99),
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Avatar(
+                      onTap: controller.navigateToSettings,
+                      mxContent: snapshot.data?.avatarUrl,
+                      name: snapshot.data?.displayName ?? matrix.client.userID?.localpart,
+                      size: 42,
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -158,21 +161,16 @@ class HomeView extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16.0),
-          ListTile(
-            onTap: () async {
+          const SizedBox(height: 24.0),
+          ElevatedButton(
+            onPressed: () async {
               final url = Uri.parse("https://baramej.io");
               if (await canLaunchUrl(url)) {
                 launchUrl(url);
               }
             },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(HomeContainer.radius),
-            ),
-            title: Text(
+            child: Text(
               L10n.of(context).poweredByBaramej,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.labelSmall,
             ),
           ),
         ],
