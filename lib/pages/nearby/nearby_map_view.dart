@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/colors.dart';
+import 'package:fluffychat/config/secrets.dart';
 import 'package:fluffychat/pages/nearby/car_number_plate.dart';
 import 'package:fluffychat/pages/nearby/nearby_map.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +57,7 @@ class NearbyMapView extends StatelessWidget {
         TileLayer(
           maxZoom: 20,
           minZoom: 0,
-          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: const ['a', 'b', 'c'],
+          urlTemplate: Secrets.kMapboxTileUrl,
         ),
         MarkerLayer(
           markers: [
