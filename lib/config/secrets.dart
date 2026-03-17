@@ -5,4 +5,5 @@ class Secrets {
   static const String kAzuraCastApiKey = 'c86cfe8a7b3ac365:02c4a4e17a736ba02198aa2864b1e686';
   static const String kResendApiKey = 're_CRVSaiDi_MdhNk2jbKi3NyGp8f69PvxZr';
   static const String kRegisterEmailTokenSecret = 'xdVtxoqmpT396jEB';
+  static const String kMapboxTileUrl = '<mapbox-tile-url>';
 }
