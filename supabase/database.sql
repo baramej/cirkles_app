@@ -48,6 +48,7 @@ CREATE TABLE public.route (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   url text NOT NULL,
   image text NOT NULL,
+  username text,
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
   CONSTRAINT route_pkey PRIMARY KEY (id),
   CONSTRAINT route_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.route_category(id)
