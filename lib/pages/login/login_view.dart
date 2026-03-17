@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/widgets/layouts/login_scaffold.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:flutter/material.dart';
+
 import 'login.dart';
 
 class LoginView extends StatelessWidget {
@@ -14,31 +14,14 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final homeserver = controller.widget.client.homeserver
-        .toString()
-        .replaceFirst('https://', '');
-    final title = L10n.of(context).logInTo(homeserver);
-    final titleParts = title.split(homeserver);
-
     return LoginScaffold(
-      enforceMobileMode:
-          Matrix.of(context).widget.clients.any((client) => client.isLogged()),
+      enforceMobileMode: Matrix.of(context).widget.clients.any((client) => client.isLogged()),
       appBar: AppBar(
         leading: controller.loading ? null : const Center(child: BackButton()),
         automaticallyImplyLeading: !controller.loading,
         titleSpacing: !controller.loading ? 0 : null,
-        title: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(text: titleParts.first),
-              TextSpan(
-                text: homeserver,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              TextSpan(text: titleParts.last),
-            ],
-          ),
-          style: const TextStyle(fontSize: 18),
+        title: Text(
+          L10n.of(context).login,
         ),
       ),
       body: Builder(
@@ -62,14 +45,12 @@ class LoginView extends StatelessWidget {
                     controller: controller.usernameController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    autofillHints:
-                        controller.loading ? null : [AutofillHints.username],
+                    autofillHints: controller.loading ? null : [AutofillHints.username],
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.account_box_outlined),
                       errorText: controller.usernameError,
-                      errorStyle: const TextStyle(color: Colors.orange),
-                      hintText: '@username:domain',
-                      labelText: L10n.of(context).emailOrUsername,
+                      hintText: L10n.of(context).usernameHint,
+                      labelText: L10n.of(context).username,
                     ),
                   ),
                 ),
@@ -79,8 +60,7 @@ class LoginView extends StatelessWidget {
                   child: TextField(
                     readOnly: controller.loading,
                     autocorrect: false,
-                    autofillHints:
-                        controller.loading ? null : [AutofillHints.password],
+                    autofillHints: controller.loading ? null : [AutofillHints.password],
                     controller: controller.passwordController,
                     textInputAction: TextInputAction.go,
                     obscureText: !controller.showPassword,
@@ -88,13 +68,10 @@ class LoginView extends StatelessWidget {
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock_outlined),
                       errorText: controller.passwordError,
-                      errorStyle: const TextStyle(color: Colors.orange),
                       suffixIcon: IconButton(
                         onPressed: controller.toggleShowPassword,
                         icon: Icon(
-                          controller.showPassword
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
+                          controller.showPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                           color: Colors.black,
                         ),
                       ),
@@ -112,25 +89,30 @@ class LoginView extends StatelessWidget {
                       foregroundColor: theme.colorScheme.onPrimary,
                     ),
                     onPressed: controller.loading ? null : controller.login,
-                    child: controller.loading
-                        ? const LinearProgressIndicator()
-                        : Text(L10n.of(context).login),
+                    child: controller.loading ? const LinearProgressIndicator() : Text(L10n.of(context).login),
                   ),
                 ),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: TextButton(
-                    onPressed: controller.loading
-                        ? () {}
-                        : controller.passwordForgotten,
+                    onPressed: controller.loading ? () {} : controller.register,
                     style: TextButton.styleFrom(
-                      foregroundColor: theme.colorScheme.error,
+                      foregroundColor: theme.colorScheme.primary,
+                    ),
+                    child: Text(L10n.of(context).dontHaveAccount),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: TextButton(
+                    onPressed: controller.loading ? () {} : controller.passwordForgotten,
+                    style: TextButton.styleFrom(
+                      foregroundColor: theme.colorScheme.primary,
                     ),
                     child: Text(L10n.of(context).passwordForgotten),
                   ),
                 ),
-                const SizedBox(height: 16),
               ],
             ),
           );

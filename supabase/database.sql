@@ -1,0 +1,74 @@
+CREATE TABLE public.circle (
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  name text NOT NULL,
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  username text,
+  CONSTRAINT circle_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.drivers (
+  id uuid NOT NULL,
+  car_make text NOT NULL,
+  car_model text NOT NULL,
+  car_year text NOT NULL,
+  car_plate text NOT NULL UNIQUE,
+  is_sharing boolean NOT NULL DEFAULT false,
+  location geography(POINT) NOT NULL,
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  mx_id text NOT NULL DEFAULT ''::text,
+  car_color text NOT NULL DEFAULT ''::text,
+  CONSTRAINT drivers_pkey PRIMARY KEY (id),
+  CONSTRAINT drivers_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
+);
+
+CREATE TABLE public.ratings (
+  rater_id uuid NOT NULL,
+  rating integer CHECK (rating >= 1 AND rating <= 5),
+  target_driver_id uuid NOT NULL,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT ratings_pkey PRIMARY KEY (rater_id, target_driver_id),
+  CONSTRAINT ratings_target_driver_id_fkey FOREIGN KEY (target_driver_id) REFERENCES public.drivers(id),
+  CONSTRAINT ratings_rater_id_fkey FOREIGN KEY (rater_id) REFERENCES auth.users(id)
+);
+
+CREATE TABLE public.route_category (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  name text NOT NULL,
+  name_ar text NOT NULL,
+  CONSTRAINT route_category_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.route (
+  description text NOT NULL,
+  category_id bigint NOT NULL,
+  name text NOT NULL,
+  duration integer NOT NULL,
+  kms integer NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  url text NOT NULL,
+  image text NOT NULL,
+  username text,
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  CONSTRAINT route_pkey PRIMARY KEY (id),
+  CONSTRAINT route_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.route_category(id)
+);
+
+CREATE TABLE public.route_experience (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  name text NOT NULL,
+  name_ar text NOT NULL,
+  icon text NOT NULL,
+  CONSTRAINT route_experience_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.route_route_experience (
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  route_id bigint NOT NULL,
+  experience_id bigint NOT NULL,
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  CONSTRAINT route_route_experience_pkey PRIMARY KEY (id),
+  CONSTRAINT route_route_experience_experience_id_fkey FOREIGN KEY (experience_id) REFERENCES public.route_experience(id),
+  CONSTRAINT route_route_experience_route_id_fkey FOREIGN KEY (route_id) REFERENCES public.route(id)
+);

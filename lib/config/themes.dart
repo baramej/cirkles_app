@@ -1,3 +1,4 @@
+import 'package:fluffychat/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,11 +11,9 @@ abstract class FluffyThemes {
 
   static const double navRailWidth = 80.0;
 
-  static bool isColumnModeByWidth(double width) =>
-      width > columnWidth * 2 + navRailWidth;
+  static bool isColumnModeByWidth(double width) => width > columnWidth * 2 + navRailWidth;
 
-  static bool isColumnMode(BuildContext context) =>
-      isColumnModeByWidth(MediaQuery.sizeOf(context).width);
+  static bool isColumnMode(BuildContext context) => isColumnModeByWidth(MediaQuery.sizeOf(context).width);
 
   static bool isThreeColumnMode(BuildContext context) =>
       MediaQuery.sizeOf(context).width > FluffyThemes.columnWidth * 3.5;
@@ -38,24 +37,24 @@ abstract class FluffyThemes {
   static const Duration animationDuration = Duration(milliseconds: 250);
   static const Curve animationCurve = Curves.easeInOut;
 
+  static const inputDecorationThemeBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(AppConfig.borderRadius)),
+  );
+
   static ThemeData buildTheme(
     BuildContext context,
     Brightness brightness, [
     Color? seed,
   ]) {
-    final colorScheme = ColorScheme.fromSeed(
-      brightness: brightness,
-      seedColor: seed ?? AppConfig.colorSchemeSeed ?? AppConfig.primaryColor,
-    );
+    brightness = Brightness.light;
+    final colorScheme = brightness == Brightness.light ? AppColors.lightColorScheme : AppColors.darkColorScheme;
     final isColumnMode = FluffyThemes.isColumnMode(context);
     return ThemeData(
       visualDensity: VisualDensity.standard,
       useMaterial3: true,
       brightness: brightness,
       colorScheme: colorScheme,
-      dividerColor: brightness == Brightness.dark
-          ? colorScheme.surfaceContainerHighest
-          : colorScheme.surfaceContainer,
+      dividerColor: brightness == Brightness.dark ? colorScheme.surfaceContainerHighest : colorScheme.surfaceContainer,
       popupMenuTheme: PopupMenuThemeData(
         color: colorScheme.surfaceContainerLow,
         iconColor: colorScheme.onSurface,
@@ -75,9 +74,14 @@ abstract class FluffyThemes {
         selectionHandleColor: colorScheme.secondary,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppConfig.borderRadius),
+        border: inputDecorationThemeBorder,
+        errorBorder: inputDecorationThemeBorder.copyWith(
+          borderSide: const BorderSide(color: Colors.red),
         ),
+        focusedErrorBorder: inputDecorationThemeBorder.copyWith(
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        errorStyle: const TextStyle(color: Colors.red),
         contentPadding: const EdgeInsets.all(12),
       ),
       chipTheme: ChipThemeData(
@@ -90,12 +94,10 @@ abstract class FluffyThemes {
       ),
       appBarTheme: AppBarTheme(
         toolbarHeight: isColumnMode ? 72 : 56,
-        shadowColor:
-            isColumnMode ? colorScheme.surfaceContainer.withAlpha(128) : null,
+        shadowColor: isColumnMode ? colorScheme.surfaceContainer.withAlpha(128) : null,
         surfaceTintColor: isColumnMode ? colorScheme.surface : null,
         backgroundColor: isColumnMode ? colorScheme.surface : null,
-        actionsPadding:
-            isColumnMode ? const EdgeInsets.symmetric(horizontal: 16.0) : null,
+        actionsPadding: isColumnMode ? const EdgeInsets.symmetric(horizontal: 16.0) : null,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: brightness.reversed,
@@ -125,8 +127,8 @@ abstract class FluffyThemes {
           : const SnackBarThemeData(behavior: SnackBarBehavior.floating),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: colorScheme.secondaryContainer,
-          foregroundColor: colorScheme.onSecondaryContainer,
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
           elevation: 0,
           padding: const EdgeInsets.all(16),
           textStyle: const TextStyle(fontSize: 16),
@@ -137,22 +139,15 @@ abstract class FluffyThemes {
 }
 
 extension on Brightness {
-  Brightness get reversed =>
-      this == Brightness.dark ? Brightness.light : Brightness.dark;
+  Brightness get reversed => this == Brightness.dark ? Brightness.light : Brightness.dark;
 }
 
 extension BubbleColorTheme on ThemeData {
-  Color get bubbleColor => brightness == Brightness.light
-      ? colorScheme.primary
-      : colorScheme.primaryContainer;
+  Color get bubbleColor => brightness == Brightness.light ? colorScheme.primary : colorScheme.primaryContainer;
 
-  Color get onBubbleColor => brightness == Brightness.light
-      ? colorScheme.onPrimary
-      : colorScheme.onPrimaryContainer;
+  Color get onBubbleColor => brightness == Brightness.light ? colorScheme.onPrimary : colorScheme.onPrimaryContainer;
 
   Color get secondaryBubbleColor => HSLColor.fromColor(
-        brightness == Brightness.light
-            ? colorScheme.tertiary
-            : colorScheme.tertiaryContainer,
+        brightness == Brightness.light ? colorScheme.tertiary : colorScheme.tertiaryContainer,
       ).withSaturation(0.5).toColor();
 }

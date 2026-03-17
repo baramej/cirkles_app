@@ -52,35 +52,35 @@ abstract class PlatformInfos {
       context: context,
       children: [
         Text('Version: $version'),
-        TextButton.icon(
-          onPressed: () => launchUrlString(AppConfig.sourceCodeUrl),
-          icon: const Icon(Icons.source_outlined),
-          label: Text(L10n.of(context).sourceCode),
-        ),
-        Builder(
-          builder: (innerContext) {
-            return TextButton.icon(
-              onPressed: () {
-                context.go('/logs');
-                Navigator.of(innerContext).pop();
-              },
-              icon: const Icon(Icons.list_outlined),
-              label: const Text('Logs'),
-            );
-          },
-        ),
-        Builder(
-          builder: (innerContext) {
-            return TextButton.icon(
-              onPressed: () {
-                context.go('/configs');
-                Navigator.of(innerContext).pop();
-              },
-              icon: const Icon(Icons.settings_applications_outlined),
-              label: const Text('Advanced Configs'),
-            );
-          },
-        ),
+        // TextButton.icon(
+        //   onPressed: () => launchUrlString(AppConfig.sourceCodeUrl),
+        //   icon: const Icon(Icons.source_outlined),
+        //   label: Text(L10n.of(context).sourceCode),
+        // ),
+        // Builder(
+        //   builder: (innerContext) {
+        //     return TextButton.icon(
+        //       onPressed: () {
+        //         context.go('/logs');
+        //         Navigator.of(innerContext).pop();
+        //       },
+        //       icon: const Icon(Icons.list_outlined),
+        //       label: const Text('Logs'),
+        //     );
+        //   },
+        // ),
+        // Builder(
+        //   builder: (innerContext) {
+        //     return TextButton.icon(
+        //       onPressed: () {
+        //         context.go('/configs');
+        //         Navigator.of(innerContext).pop();
+        //       },
+        //       icon: const Icon(Icons.settings_applications_outlined),
+        //       label: const Text('Advanced Configs'),
+        //     );
+        //   },
+        // ),
       ],
       applicationIcon: Image.asset(
         'assets/logo.png',

@@ -16,29 +16,64 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-    increment_build_number(
-      xcodeproj: "Runner.xcodeproj",
-      build_number: latest_testflight_build_number + 1
-    )
-    re = /version:\s([0-9]*\.[0-9]*\.[0-9]*)\+[0-9]*/i
-    config = File.read("../../pubspec.yaml")
-    version_name = config.match(re).captures[0]
-    increment_version_number(version_number: version_name)
-    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
-    upload_to_testflight(
-      distribute_external: true,
-      groups: "FluffyChat Betatest",
-      changelog: "This is a release candidate for FluffyChat. Please test if the app is overall in a good condition before we push this to production.",
+  def get_api_key
+    app_store_connect_api_key(
+      key_id: "48QQ963XCP",
+      issuer_id: "a5dbdb8d-3a08-416a-b308-d5aefac9b57a",
+      key_filepath: "./fastlane/AuthKey_48QQ963XCP.p8"
     )
   end
-end
 
-lane :release do
-  capture_screenshots                  # generate new screenshots for the App Store
-  sync_code_signing(type: "appstore")  # see code signing guide for more information
-  build_app(scheme: "Runner")
-  upload_to_app_store                  # upload your app to App Store Connect
-  slack(message: "Successfully uploaded a new App Store build")
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    api_key = get_api_key
+    
+    version = flutter_version()
+
+    increment_version_number(version_number: version["version_name"], xcodeproj: "Runner.xcodeproj")
+    increment_build_number(build_number: version["version_code"], xcodeproj: "Runner.xcodeproj")
+
+    match(
+      type: "appstore", 
+      api_key: api_key,
+      app_identifier: [
+        "cirkles.app",
+        "cirkles.app.Notification-Service-Extension",
+        "cirkles.app.Cirkles-Share-Extension"
+      ]
+    )
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+
+    upload_to_testflight
+  end
+
+  desc "Deploy new version to the App Store"
+  lane :release do
+    api_key = get_api_key
+    
+    version = flutter_version()
+
+    increment_version_number(version_number: version["version_name"], xcodeproj: "Runner.xcodeproj")
+    increment_build_number(build_number: version["version_code"], xcodeproj: "Runner.xcodeproj")
+    
+    match(
+      type: "appstore", 
+      api_key: api_key,
+      app_identifier: [
+        "cirkles.app",
+        "cirkles.app.Notification-Service-Extension",
+        "cirkles.app.Cirkles-Share-Extension"
+      ]
+    )
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+    
+    upload_to_app_store(
+      api_key: api_key,
+      force: true,
+      submit_for_review: false,
+      skip_metadata: true,
+      skip_screenshots: true,
+      run_precheck_before_submit: false
+    )
+  end
 end

@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-
-import 'package:go_router/go_router.dart';
-
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/config/themes.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/chat_list/chat_list.dart';
 import 'package:fluffychat/widgets/navigation_rail.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'chat_list_body.dart';
 
 class ChatListView extends StatelessWidget {
@@ -31,8 +30,7 @@ class ChatListView extends StatelessWidget {
       },
       child: Row(
         children: [
-          if (FluffyThemes.isColumnMode(context) ||
-              AppConfig.displayNavigationRail) ...[
+          if (FluffyThemes.isColumnMode(context) || AppConfig.displayNavigationRail) ...[
             SpacesNavigationRail(
               activeSpaceId: controller.activeSpaceId,
               onGoToChats: controller.clearActiveSpace,
@@ -50,8 +48,7 @@ class ChatListView extends StatelessWidget {
               behavior: HitTestBehavior.translucent,
               child: Scaffold(
                 body: ChatListViewBody(controller),
-                floatingActionButton: !controller.isSearchMode &&
-                        controller.activeSpaceId == null
+                floatingActionButton: !controller.isSearchMode && controller.activeSpaceId == null
                     ? FloatingActionButton.extended(
                         onPressed: () => context.go('/rooms/newprivatechat'),
                         icon: const Icon(Icons.add_outlined),

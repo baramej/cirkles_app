@@ -2,14 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AppGroupId</key>
+	<string>$(CUSTOM_GROUP_ID)</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>im.fluffychat.app</string>
+		<string>cirkles.app</string>
+        <string>com.pravera.flutter_foreground_task.refresh</string>
 	</array>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>FluffyChat</string>
+	<string>Cirkles</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -21,7 +26,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>2.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -29,22 +34,23 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>im.fluffychat.app.uris</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ShareMedia-$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-				<string>im.fluffychat</string>
-				<string>matrix</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>3553</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play audio and voice messages in the app.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
@@ -54,31 +60,32 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>Share calendar dates with your contacts in FluffyChat.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Open the camera and take a picture to share them with your contacts on FluffyChat.</string>
+	<string>Open the camera and take a picture to share them with your contacts on Cirkles.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Share contacts with your contacts in FluffyChat.</string>
+	<string>Share contacts with your contacts in Cirkles.</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>FluffyChat uses an app lock for an additional security level</string>
+	<string>Cirkles uses an app lock for an additional security level</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Share your location with your contacts in Cirkles.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Share your location with your contacts in FluffyChat.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Share your location with your contacts in FluffyChat.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Share your location with your contacts in FluffyChat.</string>
+	<string>Share your location with your contacts in Cirkles.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Record voice message and share them with your contacts on FluffyChat.</string>
+	<string>Record voice message and share them with your contacts on Cirkles.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Share motions with your contacts in FluffyChat.</string>
+	<string>Share motions with your contacts in Cirkles.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Open photos from your gallery and share them with your contacts on FluffyChat.</string>
+	<string>Open photos from your gallery and share them with your contacts on Cirkles.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Share data with your contacts in FluffyChat.</string>
+	<string>Share data with your contacts in Cirkles.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
-		<string>fetch</string>
 		<string>processing</string>
 		<string>remote-notification</string>
+		<string>fetch</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -102,15 +109,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-  	<key>NSAllowsArbitraryLoads</key>
-  	<true/>
-</dict>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
 </plist>
