@@ -1,10 +1,8 @@
-git_url("git@github.com:baramej/cirkles_certificates.git")
+git_url("git@github.com:baramej/fastlane_certificates.git")
 
-storage_mode("git")
+type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
 
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
-
-# app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
+app_identifier(["cirkles.app", "cirkles.app.Notification-Service-Extension", "cirkles.app.Cirkles-Share-Extension"])
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
