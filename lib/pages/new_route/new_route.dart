@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/new_route/new_route_view.dart';
+import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:matrix/matrix.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NewRoute extends StatefulWidget {
@@ -99,8 +101,9 @@ class NewRouteController extends State<NewRoute> {
     if (newRouteFormKey.currentState!.validate()) {
       final duration = int.tryParse(durationController.text);
       final kms = int.tryParse(kmsController.text);
+      final username = Matrix.of(context).client.userID?.localpart;
 
-      if (duration == null || kms == null) {
+      if (duration == null || kms == null || username == null) {
         return;
       }
 
@@ -131,6 +134,7 @@ class NewRouteController extends State<NewRoute> {
           "url": urlController.text.trim(),
           "category_id": selectedCategory!['id'],
           "image": imageUrl,
+          "username": username,
         }).select();
 
         for (var i = 0; i < selectedExperiences.length; i++) {

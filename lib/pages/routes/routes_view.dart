@@ -22,11 +22,12 @@ class RoutesView extends StatelessWidget {
         title: Text(L10n.of(context).routes),
         centerTitle: true,
         actions: [
-          IconButton.filled(
-            onPressed: controller.navigateToNewRoute,
-            icon: const Icon(Icons.add),
-            color: theme.colorScheme.onPrimary,
-          ),
+          if (!controller.hasOwnRoute)
+            IconButton.filled(
+              onPressed: controller.navigateToNewRoute,
+              icon: const Icon(Icons.add),
+              color: theme.colorScheme.onPrimary,
+            ),
         ],
       ),
       body: Padding(

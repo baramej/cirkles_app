@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:fluffychat/pages/routes/routes_view.dart';
+import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:matrix/matrix.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Routes extends StatefulWidget {
@@ -17,6 +20,7 @@ class RoutesController extends State<Routes> {
   List<Map<String, dynamic>> routes = [];
   List<Map<String, dynamic>> categories = [];
   Map<String, dynamic>? selectedCategory;
+  bool hasOwnRoute = true;
 
   Future<void> initData() async {
     await Future.wait([
@@ -31,10 +35,12 @@ class RoutesController extends State<Routes> {
   }
 
   Future<void> loadRoutes() async {
+    final username = Matrix.of(context).client.userID?.localpart;
     final response = await Supabase.instance.client.from('route').select('*, category_id(id, name)');
     setState(() {
       routes = response.toList();
       allRoutes = response.toList();
+      hasOwnRoute = response.firstWhereOrNull((r) => r['username'] == username) != null;
     });
   }
 
