@@ -47,7 +47,11 @@ platform :android do
     )
     upload_to_play_store(
       track: 'production',
-      aab: '../build/app/outputs/bundle/release/app-release.aab'
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      json_key: "fastlane-key.json",
+      skip_upload_metadata: true,
+      skip_upload_screenshots: true,
+      skip_upload_images: true
     )
   end
 end
