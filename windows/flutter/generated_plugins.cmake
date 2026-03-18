@@ -4,18 +4,24 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
+  connectivity_plus
   desktop_drop
   dynamic_color
   emoji_picker_flutter
   file_selector_windows
+  firebase_core
   flutter_secure_storage_windows
   flutter_webrtc
   geolocator_windows
+  livekit_client
   permission_handler_windows
   record_windows
+  screen_retriever_windows
   share_plus
   sqlcipher_flutter_libs
   url_launcher_windows
+  webcrypto
+  window_manager
   window_to_front
 )
 

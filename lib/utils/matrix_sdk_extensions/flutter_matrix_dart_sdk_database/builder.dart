@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fluffychat/utils/simple_file_logger.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:matrix/matrix.dart';
@@ -25,6 +26,15 @@ Future<DatabaseApi> flutterMatrixSdkDatabaseBuilder(String clientName) async {
   } catch (e, s) {
     Logs().wtf('Unable to construct database!', e, s);
 
+    await appendDebugLog('Unable to construct database: $e');
+    try {
+      // best-effort: dump header for the DB path we will get via _getDatabasePath
+      final path = await _getDatabasePath(clientName);
+      await dumpDatabaseHeader(path);
+    } catch (e2, _) {
+      await appendDebugLog('Failed to dump DB header: $e2');
+    }
+
     try {
       // Send error notification:
       final l10n = await lookupL10n(PlatformDispatcher.instance.locale);
@@ -37,19 +47,19 @@ Future<DatabaseApi> flutterMatrixSdkDatabaseBuilder(String clientName) async {
     }
 
     // Try to delete database so that it can created again on next init:
-    database?.delete().catchError(
-          (e, s) => Logs().wtf(
-            'Unable to delete database, after failed construction',
-            e,
-            s,
-          ),
-        );
+    // database?.delete().catchError(
+    //       (e, s) => Logs().wtf(
+    //         'Unable to delete database, after failed construction',
+    //         e,
+    //         s,
+    //       ),
+    //     );
 
     // Delete database file:
-    if (!kIsWeb) {
-      final dbFile = File(await _getDatabasePath(clientName));
-      if (await dbFile.exists()) await dbFile.delete();
-    }
+    // if (!kIsWeb) {
+    //   final dbFile = File(await _getDatabasePath(clientName));
+    //   if (await dbFile.exists()) await dbFile.delete();
+    // }
 
     rethrow;
   }

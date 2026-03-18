@@ -46,6 +46,7 @@ docs/tailwind.css
 /key.jks
 /android/key.properties
 **/android/app/.cxx
+android/app/google-services.json
 android/key.jks
 android/keys.json
 android/Gemfile.lock
@@ -54,6 +55,7 @@ ios/Flutter/.last_build_id
 ios/Podfile.lock
 ios/Runner.ipa
 ios/Runner/GoogleServices-Info.plist
+ios/gc_keys.json
 
 /windows/out
 /winuwp/out
@@ -70,3 +72,8 @@ android/app/google-services.json
 web/pkg/package.json
 web/pkg/vodozemac_bindings_dart_bg.wasm
 web/pkg/vodozemac_bindings_dart.js
+
+.env
+
+lib/config/secrets.dart
+android/fastlane-key.json

@@ -1,15 +1,16 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-
-import 'package:matrix/matrix.dart';
-
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/localized_exception_extension.dart';
+import 'package:fluffychat/utils/supabase_auth.dart';
 import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
 import 'package:fluffychat/widgets/adaptive_dialogs/show_text_input_dialog.dart';
 import 'package:fluffychat/widgets/future_loading_dialog.dart';
 import 'package:fluffychat/widgets/matrix.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:matrix/matrix.dart';
+
 import '../../utils/platform_infos.dart';
 import 'login_view.dart';
 
@@ -29,8 +30,7 @@ class LoginController extends State<Login> {
   bool loading = false;
   bool showPassword = false;
 
-  void toggleShowPassword() =>
-      setState(() => showPassword = !loading && !showPassword);
+  void toggleShowPassword() => setState(() => showPassword = !loading && !showPassword);
 
   void login() async {
     final matrix = Matrix.of(context);
@@ -70,17 +70,17 @@ class LoginController extends State<Login> {
         identifier = AuthenticationUserIdentifier(user: username);
       }
       final client = await matrix.getLoginClient();
-      await client.login(
+      final response = await client.login(
         LoginType.mLoginPassword,
         identifier: identifier,
         // To stay compatible with older server versions
         // ignore: deprecated_member_use
-        user: identifier.type == AuthenticationIdentifierTypes.userId
-            ? username
-            : null,
+        user: identifier.type == AuthenticationIdentifierTypes.userId ? username : null,
         password: passwordController.text,
         initialDeviceDisplayName: PlatformInfos.clientName,
       );
+
+      await SupabaseAuth.registerOrLogin(response.userId.localpart!);
     } on MatrixException catch (exception) {
       setState(() => passwordError = exception.errorMessage);
       return setState(() => loading = false);
@@ -130,8 +130,7 @@ class LoginController extends State<Login> {
           final dialogResult = await showOkCancelAlertDialog(
             context: context,
             useRootNavigator: false,
-            title: L10n.of(context)
-                .noMatrixServer(newDomain.toString(), oldHomeserver.toString()),
+            title: L10n.of(context).noMatrixServer(newDomain.toString(), oldHomeserver.toString()),
             okLabel: L10n.of(context).ok,
             cancelLabel: L10n.of(context).cancel,
           );
@@ -165,8 +164,7 @@ class LoginController extends State<Login> {
       message: L10n.of(context).enterAnEmailAddress,
       okLabel: L10n.of(context).ok,
       cancelLabel: L10n.of(context).cancel,
-      initialText:
-          usernameController.text.isEmail ? usernameController.text : '',
+      initialText: usernameController.text.isEmail ? usernameController.text : '',
       hintText: L10n.of(context).enterAnEmailAddress,
       keyboardType: TextInputType.emailAddress,
     );
@@ -233,13 +231,19 @@ class LoginController extends State<Login> {
 
   static int sendAttempt = 0;
 
+  void register() {
+    context.push(
+      '${GoRouter.of(context).routeInformationProvider.value.uri.path}/register',
+      extra: widget.client,
+    );
+  }
+
   @override
   Widget build(BuildContext context) => LoginView(this);
 }
 
 extension on String {
-  static final RegExp _phoneRegex =
-      RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
+  static final RegExp _phoneRegex = RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
   static final RegExp _emailRegex = RegExp(r'(.+)@(.+)\.(.+)');
 
   bool get isEmail => _emailRegex.hasMatch(this);

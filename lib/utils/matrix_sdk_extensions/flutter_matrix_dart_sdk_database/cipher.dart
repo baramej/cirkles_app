@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:fluffychat/utils/simple_file_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +19,9 @@ Future<String?> getDatabaseCipher() async {
   String? password;
 
   try {
-    const secureStorage = FlutterSecureStorage();
+    const secureStorage = FlutterSecureStorage(
+      iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+    );
     final containsEncryptionKey =
         await secureStorage.read(key: _passwordStorageKey) != null;
     if (!containsEncryptionKey) {
@@ -39,15 +42,18 @@ Future<String?> getDatabaseCipher() async {
         .delete(key: _passwordStorageKey)
         .catchError((_) {});
     Logs().w('Database encryption is not supported on this platform', e);
+    await appendDebugLog('getDatabaseCipher: MissingPluginException: $e');
     _sendNoEncryptionWarning(e);
   } catch (e, s) {
     const FlutterSecureStorage()
         .delete(key: _passwordStorageKey)
         .catchError((_) {});
     Logs().w('Unable to init database encryption', e, s);
+    await appendDebugLog('getDatabaseCipher: unexpected error: $e');
     _sendNoEncryptionWarning(e);
   }
 
+  await appendDebugLog('getDatabaseCipher: returning passwordPresent=${password!=null}');
   return password;
 }
 

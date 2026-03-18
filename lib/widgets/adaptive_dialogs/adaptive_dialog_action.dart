@@ -1,7 +1,6 @@
+import 'package:fluffychat/config/app_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:fluffychat/config/app_config.dart';
 
 class AdaptiveDialogAction extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -49,15 +48,10 @@ class AdaptiveDialogAction extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: borderRadius ??
-                        BorderRadius.circular(AppConfig.borderRadius),
+                    borderRadius: borderRadius ?? BorderRadius.circular(AppConfig.borderRadius),
                   ),
-                  backgroundColor: autofocus
-                      ? theme.colorScheme.primary
-                      : theme.colorScheme.surfaceBright,
-                  foregroundColor: autofocus
-                      ? theme.colorScheme.onPrimary
-                      : theme.colorScheme.primary,
+                  backgroundColor: autofocus ? theme.colorScheme.primary : theme.colorScheme.surfaceBright,
+                  foregroundColor: autofocus ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
                 ),
                 onPressed: onPressed,
                 autofocus: autofocus,
