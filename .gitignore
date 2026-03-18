@@ -46,6 +46,7 @@ docs/tailwind.css
 /key.jks
 /android/key.properties
 **/android/app/.cxx
+android/app/google-services.json
 android/key.jks
 android/keys.json
 android/Gemfile.lock
