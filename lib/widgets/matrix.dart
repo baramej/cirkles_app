@@ -1,11 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 import 'package:collection/collection.dart';
 import 'package:desktop_notifications/desktop_notifications.dart';
+import 'package:fluffychat/l10n/l10n.dart';
+import 'package:fluffychat/utils/client_manager.dart';
+import 'package:fluffychat/utils/email_validation.dart';
+import 'package:fluffychat/utils/init_with_restore.dart';
+import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
+import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/utils/uia_request_manager.dart';
+import 'package:fluffychat/utils/voip_plugin.dart';
+import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
+import 'package:fluffychat/widgets/fluffy_chat_app.dart';
+import 'package:fluffychat/widgets/future_loading_dialog.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -17,16 +27,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'package:fluffychat/l10n/l10n.dart';
-import 'package:fluffychat/utils/client_manager.dart';
-import 'package:fluffychat/utils/init_with_restore.dart';
-import 'package:fluffychat/utils/matrix_sdk_extensions/matrix_file_extension.dart';
-import 'package:fluffychat/utils/platform_infos.dart';
-import 'package:fluffychat/utils/uia_request_manager.dart';
-import 'package:fluffychat/utils/voip_plugin.dart';
-import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
-import 'package:fluffychat/widgets/fluffy_chat_app.dart';
-import 'package:fluffychat/widgets/future_loading_dialog.dart';
 import '../config/app_config.dart';
 import '../config/setting_keys.dart';
 import '../pages/key_verification/key_verification_dialog.dart';
@@ -45,11 +45,14 @@ class Matrix extends StatefulWidget {
 
   final SharedPreferences store;
 
+  final EmailValidation? emailValidation;
+
   const Matrix({
     this.child,
     required this.clients,
     required this.store,
     this.queryParameters,
+    this.emailValidation,
     super.key,
   });
 
@@ -172,7 +175,7 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
             );
             _registerSubs(_loginClientCandidate!.clientName);
             _loginClientCandidate = null;
-            FluffyChatApp.router.go('/rooms');
+        FluffyChatApp.router.go('/main');
           });
     if (widget.clients.isEmpty) widget.clients.add(candidate);
     return candidate;
@@ -299,11 +302,11 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
         );
 
         if (state != LoginState.loggedIn) {
-          FluffyChatApp.router.go('/rooms');
+          FluffyChatApp.router.go('/main');
         }
       } else {
         FluffyChatApp.router
-            .go(state == LoginState.loggedIn ? '/rooms' : '/home');
+            .go(state == LoginState.loggedIn ? '/main' : '/home');
       }
     });
     onUiaRequest[name] ??= c.onUiaRequest.stream.listen(uiaRequestHandler);

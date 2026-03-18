@@ -2,7 +2,7 @@ name: fluffychat
 description: Chat with your friends.
 publish_to: none
 # On version bump also increase the build number for F-Droid
-version: 2.1.1+3543
+version: 2.2.0+3553
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -17,10 +17,12 @@ dependencies:
   chewie: ^1.13.0
   collection: ^1.18.0
   cross_file: ^0.3.4+2
+  crypto: ^3.0.7
   cupertino_icons: any
+  dart_resend: ^1.0.1
   desktop_drop: ^0.6.1
   desktop_notifications: ^0.6.3
-  device_info_plus: ^12.1.0
+  device_info_plus: ^11.5.0
   dynamic_color: ^1.8.1
   emoji_picker_flutter: ^4.3.0
   emojis: ^0.9.9
@@ -35,13 +37,16 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_map: ^8.2.2
+  flutter_map_animations: ^0.9.0
   flutter_new_badger: ^1.1.1
   flutter_openssl_crypto: ^0.5.0
-  flutter_secure_storage: ^9.2.4
+  flutter_rating_bar: ^4.0.1
+  #flutter_secure_storage: ^9.2.4
+  flutter_secure_storage: ^10.0.0
   flutter_shortcuts_new: ^2.0.0
   flutter_vodozemac: ^0.2.2
-  flutter_web_auth_2: ^3.1.1 # Version 4 blocked by https://github.com/MixinNetwork/flutter-plugins/issues/379
   flutter_webrtc: ^1.2.0
+  flutter_web_auth_2: ^3.1.1 # Version 4 blocked by https://github.com/MixinNetwork/flutter-plugins/issues/379
   geolocator: ^14.0.2
   go_router: ^16.2.4
   handy_window: ^0.4.0
@@ -53,6 +58,7 @@ dependencies:
   just_audio: ^0.10.5
   latlong2: ^0.9.1
   linkify: ^5.0.0
+  livekit_client: ^2.5.1
   matrix: ^2.0.1
   mime: ^2.0.0
   native_imaging: ^0.2.0
@@ -67,13 +73,14 @@ dependencies:
   qr_code_scanner_plus: ^2.0.12
   qr_image: ^1.0.0
   receive_sharing_intent: ^1.8.1
-  record: ^6.1.1
+  record: ^6.1.2
   scroll_to_index: ^3.0.1
   share_plus: ^12.0.0
   shared_preferences: ^2.2.0 # Pinned because https://github.com/flutter/flutter/issues/118401
   slugify: ^2.0.0
   sqflite_common_ffi: ^2.3.6
   sqlcipher_flutter_libs: ^0.6.8
+  supabase_flutter: ^2.0.0
   swipe_to_action: ^0.3.0
   tor_detector_web: ^1.1.0
   unifiedpush: ^6.0.2
@@ -84,8 +91,11 @@ dependencies:
   video_player: ^2.9.5
   wakelock_plus: ^1.3.3
   webrtc_interface: ^1.3.0
+  fcm_shared_isolate: ^0.2.0
 
 dev_dependencies:
+  change_app_package_name: ^1.5.0
+  flutter_launcher_icons: ^0.14.4
   flutter_lints: ^3.0.0
   flutter_native_splash: ^2.4.6
   flutter_test:
@@ -105,6 +115,12 @@ flutter_native_splash:
   color: "#ffffff"
   color_dark: "#000000"
   image: "assets/info-logo.png"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app_icon.png"
+  min_sdk_android: 24
 
 flutter:
   generate: true

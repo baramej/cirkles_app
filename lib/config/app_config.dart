@@ -2,53 +2,51 @@ import 'dart:ui';
 
 import 'package:matrix/matrix.dart';
 
+import 'secrets.dart';
+
 abstract class AppConfig {
-  static String _applicationName = 'FluffyChat';
+  static String _applicationName = 'Cirkles';
 
   static String get applicationName => _applicationName;
   static String? _applicationWelcomeMessage;
 
   static String? get applicationWelcomeMessage => _applicationWelcomeMessage;
-  static String _defaultHomeserver = 'matrix.org';
+  static String _defaultHomeserver = 'matrix.cirkles.app';
 
   static String get defaultHomeserver => _defaultHomeserver;
   static double fontSizeFactor = 1;
   static const Color chatColor = primaryColor;
   static Color? colorSchemeSeed = primaryColor;
   static const double messageFontSize = 16.0;
-  static const bool allowOtherHomeservers = true;
+  static const bool allowOtherHomeservers = false;
   static const bool enableRegistration = true;
-  static const Color primaryColor = Color(0xFF5625BA);
-  static const Color primaryColorLight = Color(0xFFCCBDEA);
-  static const Color secondaryColor = Color(0xFF41a2bc);
-  static String _privacyUrl =
-      'https://github.com/krille-chan/fluffychat/blob/main/PRIVACY.md';
+  static const Color primaryColor = Color(0xFF0F172A);
+  static const Color primaryColorLight = Color(0xFFEFEFEF);
+  static const Color secondaryColor = Color(0xFFF7F7F7);
+  static String _privacyUrl = 'https://github.com/baramej/cirkles_app/wiki/Privacy-Policy';
 
   static const Set<String> defaultReactions = {'👍', '❤️', '😂', '😮', '😢'};
 
   static String get privacyUrl => _privacyUrl;
-  static const String website = 'https://fluffychat.im';
+  static const String website = 'https://baramej.io';
   static const String enablePushTutorial =
       'https://github.com/krille-chan/fluffychat/wiki/Push-Notifications-without-Google-Services';
   static const String encryptionTutorial =
       'https://github.com/krille-chan/fluffychat/wiki/How-to-use-end-to-end-encryption-in-FluffyChat';
   static const String startChatTutorial =
       'https://github.com/krille-chan/fluffychat/wiki/How-to-Find-Users-in-FluffyChat';
-  static const String appId = 'im.fluffychat.FluffyChat';
-  static const String appOpenUrlScheme = 'im.fluffychat';
+  static const String appId = 'cirkles.app';
+  static const String appOpenUrlScheme = 'cirkles.app';
   static String _webBaseUrl = 'https://fluffychat.im/web';
 
   static String get webBaseUrl => _webBaseUrl;
-  static const String sourceCodeUrl =
-      'https://github.com/krille-chan/fluffychat';
-  static const String supportUrl =
-      'https://github.com/krille-chan/fluffychat/issues';
-  static const String changelogUrl =
-      'https://github.com/krille-chan/fluffychat/blob/main/CHANGELOG.md';
+  static const String sourceCodeUrl = 'https://github.com/baramej/cirkles_app';
+  static const String supportUrl = 'https://github.com/baramej/cirkles_app/issues';
+  static const String changelogUrl = 'https://github.com/baramej/cirkles_app/blob/main/CHANGELOG.md';
   static final Uri newIssueUrl = Uri(
     scheme: 'https',
     host: 'github.com',
-    path: '/krille-chan/fluffychat/issues/new',
+    path: '/baramej/cirkles_app/issues/new',
   );
   static bool renderHtml = true;
   static bool hideRedactedEvents = false;
@@ -64,10 +62,10 @@ abstract class AppConfig {
   static bool experimentalVoip = false;
   static const bool hideTypingUsernames = false;
   static const String inviteLinkPrefix = 'https://matrix.to/#/';
-  static const String deepLinkPrefix = 'im.fluffychat://chat/';
+  static const String deepLinkPrefix = 'cirkles.app://chat/';
   static const String schemePrefix = 'matrix:';
   static const String pushNotificationsChannelId = 'fluffychat_push';
-  static const String pushNotificationsAppId = 'chat.fluffy.fluffychat';
+  static const String pushNotificationsAppId = 'cirkles.app';
   static const double borderRadius = 18.0;
   static const double columnWidth = 360.0;
   static final Uri homeserverList = Uri(
@@ -75,6 +73,14 @@ abstract class AppConfig {
     host: 'servers.joinmatrix.org',
     path: 'servers.json',
   );
+  static const String supabaseUrl = 'https://139-162-148-208.ip.linodeusercontent.com';
+  static const String supabaseAnonKey = Secrets.kSupabaseAnonKey;
+  static const String livekitTokenServerUrl = 'https://livekitapi.cirkles.app/api/v1/getToken';
+  static const String livekitServerUrl = 'wss://cirkles-v4y8ipjp.livekit.cloud';
+  static const String azuraCastServerUrl = 'https://139-162-143-50.ip.linodeusercontent.com';
+  static const String azuraCastApiKey = Secrets.kAzuraCastApiKey;
+  static const String supportEmailFrom = 'Cirkles Support <support@cirkles.app>';
+  static const List<String> supportEmailTo = ['ali@baramej.io'];
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {

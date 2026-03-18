@@ -11,9 +11,13 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_webrtc
   gtk
   handy_window
+  livekit_client
   record_linux
+  screen_retriever_linux
   sqlcipher_flutter_libs
   url_launcher_linux
+  webcrypto
+  window_manager
   window_to_front
 )
 

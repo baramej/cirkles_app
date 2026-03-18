@@ -33,8 +33,8 @@ target 'Runner' do
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
-  # From package https://pub.dev/packages/receive_sharing_intent
-  target 'FluffyChat Share' do
+  # Share Extension is name of Extension which you created which is in this case 'Share Extension'
+  target 'Cirkles Share Extension' do
     inherit! :search_paths
   end
 end
@@ -52,7 +52,7 @@ post_install do |installer|
       config.build_settings['ENABLE_BITCODE'] = 'NO'
 
       # see https://github.com/flutter-webrtc/flutter-webrtc/issues/1054
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.1'
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = 'arm64 i386'
 
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [

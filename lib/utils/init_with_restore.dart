@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:matrix/matrix.dart';
-
 import 'package:fluffychat/config/app_config.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/utils/client_manager.dart';
 import 'package:fluffychat/utils/platform_infos.dart';
+import 'package:fluffychat/utils/simple_file_logger.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:matrix/matrix.dart';
 
 class SessionBackup {
   final String? olmAccount;
@@ -103,8 +103,12 @@ extension InitWithRestoreExtension on Client {
       }
     } catch (e, s) {
       Logs().wtf('Client init failed!', e, s);
+      await appendDebugLog('initWithRestore: init failed: $e');
+      
       final l10n = await lookupL10n(PlatformDispatcher.instance.locale);
       final sessionBackupString = await storage?.read(key: storageKey);
+      await appendDebugLog(
+          'initWithRestore: sessionBackupString present=${sessionBackupString != null} length=${sessionBackupString?.length ?? 0}');
       if (sessionBackupString == null) {
         ClientManager.sendInitNotification(
           l10n.initAppError,
