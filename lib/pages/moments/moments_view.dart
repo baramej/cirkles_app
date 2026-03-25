@@ -47,6 +47,7 @@ class MomentsView extends StatelessWidget {
                           itemCount: controller.stations.length,
                           separatorBuilder: (_, __) => const SizedBox(height: 8.0),
                           itemBuilder: (context, index) => StationCard(
+                            setStationCardController: (c) => controller.setStationCardController(c),
                             station: controller.stations[index],
                             player: controller.player,
                           ),
