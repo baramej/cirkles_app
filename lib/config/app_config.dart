@@ -81,6 +81,7 @@ abstract class AppConfig {
   static const String azuraCastApiKey = Secrets.kAzuraCastApiKey;
   static const String supportEmailFrom = 'Cirkles Support <support@cirkles.app>';
   static const List<String> supportEmailTo = ['ali@baramej.io'];
+  static const int circlesParticipantsLimit = 9;
 
   static void loadFromJson(Map<String, dynamic> json) {
     if (json['chat_color'] != null) {
