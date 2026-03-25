@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class Moments extends StatefulWidget {
   const Moments({super.key});
@@ -58,6 +59,7 @@ class MomentsController extends State<Moments> {
       onVisibilityChanged: (info) {
         final matrix = Matrix.of(context);
         if (info.visibleFraction == 0) {
+          WakelockPlus.disable();
           ScaffoldMessenger.of(matrix.context).showMaterialBanner(
             MaterialBanner(
               padding: EdgeInsets.zero,
@@ -97,6 +99,7 @@ class MomentsController extends State<Moments> {
             ),
           );
         } else {
+          WakelockPlus.enable();
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(matrix.context).clearMaterialBanners();
           });
