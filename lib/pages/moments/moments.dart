@@ -56,8 +56,8 @@ class MomentsController extends State<Moments> {
     return VisibilityDetector(
       key: const Key('moments-key'),
       onVisibilityChanged: (info) {
+        final matrix = Matrix.of(context);
         if (info.visibleFraction == 0) {
-          final matrix = Matrix.of(context);
           ScaffoldMessenger.of(matrix.context).showMaterialBanner(
             MaterialBanner(
               padding: EdgeInsets.zero,
@@ -96,6 +96,10 @@ class MomentsController extends State<Moments> {
               ],
             ),
           );
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(matrix.context).clearMaterialBanners();
+          });
         }
       },
       child: MomentsView(
