@@ -26,35 +26,11 @@ class RoomsController extends State<Rooms> {
   List<Map<String, dynamic>> myCircles = [];
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getCircles();
-    });
-  }
-
-  Future<void> onPressedNewCircle() async {
-    final result = await context.push<bool?>(
-      '${GoRouter.of(context).routeInformationProvider.value.uri.path}/newcircle',
+  Widget build(BuildContext context) {
+    return Provider(
+      create: (_) => this,
+      child: RoomsView(this),
     );
-
-    if (result == true) {
-      setState(() {
-        loading = true;
-      });
-      getCircles();
-    }
-  }
-
-  Future<void> getCircles() async {
-    final username = Matrix.of(context).client.userID?.localpart;
-    final response = await Supabase.instance.client.from('circle').select();
-    setState(() {
-      loading = false;
-      error = null;
-      circles = response.where((c) => c['username'] != username).toList();
-      myCircles = response.where((c) => c['username'] == username).toList();
-    });
   }
 
   Future<void> deleteCircle(int id) async {
@@ -109,11 +85,49 @@ class RoomsController extends State<Rooms> {
     }
   }
 
+  Future<void> getCircles() async {
+    final username = Matrix.of(context).client.userID?.localpart;
+    final response = await Supabase.instance.client.from('circle').select();
+    setState(() {
+      loading = false;
+      error = null;
+      circles = response.where((c) => c['username'] != username).toList()
+        ..sort((a, b) {
+          if (a['username'] == null && b['username'] != null) return -1;
+          if (a['username'] != null && b['username'] == null) return 1;
+          return 0;
+        });
+      myCircles = response.where((c) => c['username'] == username).toList();
+    });
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => this,
-      child: RoomsView(this),
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getCircles();
+    });
+  }
+
+  Future<void> onPressedNewCircle() async {
+    final result = await context.push<bool?>(
+      '${GoRouter.of(context).routeInformationProvider.value.uri.path}/newcircle',
     );
+
+    if (result == true) {
+      setState(() {
+        loading = true;
+      });
+      getCircles();
+    }
+  }
+
+  Future<void> refresh() async {
+    setState(() {
+      loading = true;
+      error = null;
+    });
+
+    getCircles();
   }
 }
