@@ -3,15 +3,109 @@ import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/routes/routes.dart';
 import 'package:flutter/material.dart';
 
+class RouteListTile extends StatelessWidget {
+  final Map<String, dynamic> data;
+
+  final void Function()? onPressed;
+  const RouteListTile({
+    super.key,
+    required this.data,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Material(
+      color: AppColors.blueGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(16.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: SizedBox(
+              height: 150.0,
+              child: Image.network(
+                data['image'],
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  data['name'],
+                  style: theme.textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8.0),
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.local_gas_station),
+                        const SizedBox(width: 4.0),
+                        Text(
+                          L10n.of(context).routeKms(data['kms'].toString()),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.waves),
+                        const SizedBox(width: 4.0),
+                        Text(
+                          "${data['category_id']['name']}",
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.time_to_leave),
+                        const SizedBox(width: 4.0),
+                        Text(
+                          L10n.of(context).routeDuration(
+                            (data['duration'] ~/ 60).toString(),
+                            (data['duration'] % 60).toString(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8.0),
+                FilledButton(
+                  onPressed: onPressed,
+                  child: Text(L10n.of(context).viewRoute),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 enum RoutesFilter { shortest, longest }
 
 class RoutesView extends StatelessWidget {
+  final RoutesController controller;
+
   const RoutesView({
     super.key,
     required this.controller,
   });
-
-  final RoutesController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -122,112 +216,21 @@ class RoutesView extends StatelessWidget {
                         )
                       else
                         Expanded(
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: controller.routes.length,
-                            separatorBuilder: (_, __) => const SizedBox(height: 16.0),
-                            itemBuilder: (context, index) => RouteListTile(
-                              onPressed: () => controller.navigateToRouteDetail(controller.routes[index]['id']),
-                              data: controller.routes[index],
+                          child: RefreshIndicator.adaptive(
+                            onRefresh: controller.refresh,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: controller.routes.length,
+                              separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+                              itemBuilder: (context, index) => RouteListTile(
+                                onPressed: () => controller.navigateToRouteDetail(controller.routes[index]['id']),
+                                data: controller.routes[index],
+                              ),
                             ),
                           ),
                         ),
                     ],
                   ),
-      ),
-    );
-  }
-}
-
-class RouteListTile extends StatelessWidget {
-  const RouteListTile({
-    super.key,
-    required this.data,
-    required this.onPressed,
-  });
-
-  final Map<String, dynamic> data;
-  final void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Material(
-      color: AppColors.blueGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(16.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: SizedBox(
-              height: 150.0,
-              child: Image.network(
-                data['image'],
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  data['name'],
-                  style: theme.textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8.0),
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.local_gas_station),
-                        const SizedBox(width: 4.0),
-                        Text(
-                          L10n.of(context).routeKms(data['kms'].toString()),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.waves),
-                        const SizedBox(width: 4.0),
-                        Text(
-                          "${data['category_id']['name']}",
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.time_to_leave),
-                        const SizedBox(width: 4.0),
-                        Text(
-                          L10n.of(context).routeDuration(
-                            (data['duration'] ~/ 60).toString(),
-                            (data['duration'] % 60).toString(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                FilledButton(
-                  onPressed: onPressed,
-                  child: Text(L10n.of(context).viewRoute),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

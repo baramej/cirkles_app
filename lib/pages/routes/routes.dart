@@ -22,6 +22,11 @@ class RoutesController extends State<Routes> {
   Map<String, dynamic>? selectedCategory;
   bool hasOwnRoute = true;
 
+  @override
+  Widget build(BuildContext context) {
+    return RoutesView(controller: this);
+  }
+
   Future<void> initData() async {
     await Future.wait([
       loadRoutes(),
@@ -34,13 +39,11 @@ class RoutesController extends State<Routes> {
     });
   }
 
-  Future<void> loadRoutes() async {
-    final username = Matrix.of(context).client.userID?.localpart;
-    final response = await Supabase.instance.client.from('route').select('*, category_id(id, name)');
-    setState(() {
-      routes = response.toList();
-      allRoutes = response.toList();
-      hasOwnRoute = response.firstWhereOrNull((r) => r['username'] == username) != null;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initData();
     });
   }
 
@@ -61,18 +64,14 @@ class RoutesController extends State<Routes> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      initData();
+  Future<void> loadRoutes() async {
+    final username = Matrix.of(context).client.userID?.localpart;
+    final response = await Supabase.instance.client.from('route').select('*, category_id(id, name)');
+    setState(() {
+      routes = response.toList();
+      allRoutes = response.toList();
+      hasOwnRoute = response.firstWhereOrNull((r) => r['username'] == username) != null;
     });
-  }
-
-  void navigateToRouteDetail(int id) {
-    context.push(
-      '${GoRouter.of(context).routeInformationProvider.value.uri.path}/$id',
-    );
   }
 
   Future<void> navigateToNewRoute() async {
@@ -93,6 +92,26 @@ class RoutesController extends State<Routes> {
     }
   }
 
+  void navigateToRouteDetail(int id) {
+    context.push(
+      '${GoRouter.of(context).routeInformationProvider.value.uri.path}/$id',
+    );
+  }
+
+  Future<void> refresh() async {
+    setState(() {
+      loading = true;
+      error = null;
+    });
+
+    await loadRoutes();
+
+    setState(() {
+      loading = false;
+      error = null;
+    });
+  }
+
   void setSelectedCategory(Map<String, dynamic> value) {
     setState(() {
       selectedCategory = value;
@@ -104,20 +123,15 @@ class RoutesController extends State<Routes> {
     });
   }
 
-  void sortRoutesByShortest() {
-    setState(() {
-      routes.sort((a, b) => a['duration'] < b['duration'] ? -1 : 1);
-    });
-  }
-
   void sortRoutesByLongest() {
     setState(() {
       routes.sort((a, b) => a['duration'] < b['duration'] ? 1 : -1);
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return RoutesView(controller: this);
+  void sortRoutesByShortest() {
+    setState(() {
+      routes.sort((a, b) => a['duration'] < b['duration'] ? -1 : 1);
+    });
   }
 }
