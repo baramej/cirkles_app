@@ -60,44 +60,46 @@ class MomentsController extends State<Moments> {
         final matrix = Matrix.of(context);
         if (info.visibleFraction == 0) {
           WakelockPlus.disable();
-          ScaffoldMessenger.of(matrix.context).showMaterialBanner(
-            MaterialBanner(
-              padding: EdgeInsets.zero,
-              leading: StreamBuilder(
-                stream: player.playerStateStream.asBroadcastStream(),
-                builder: (context, _) => IconButton(
-                  onPressed: () {
-                    if (player.isAtEndPosition) {
-                      player.seek(Duration.zero);
-                    } else if (player.playing) {
-                      player.pause();
-                    } else {
-                      player.play();
-                    }
-                  },
-                  icon: player.playing && !player.isAtEndPosition
-                      ? const Icon(Icons.pause_outlined)
-                      : const Icon(Icons.play_arrow_outlined),
+          if (_stationCardController?.isPlaying == true) {
+            ScaffoldMessenger.of(matrix.context).showMaterialBanner(
+              MaterialBanner(
+                padding: EdgeInsets.zero,
+                leading: StreamBuilder(
+                  stream: player.playerStateStream.asBroadcastStream(),
+                  builder: (context, _) => IconButton(
+                    onPressed: () {
+                      if (player.isAtEndPosition) {
+                        player.seek(Duration.zero);
+                      } else if (player.playing) {
+                        player.pause();
+                      } else {
+                        player.play();
+                      }
+                    },
+                    icon: player.playing && !player.isAtEndPosition
+                        ? const Icon(Icons.pause_outlined)
+                        : const Icon(Icons.play_arrow_outlined),
+                  ),
                 ),
-              ),
-              content: Text(
-                _stationCardController?.widget.station['name'] ?? L10n.of(context).live,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    _stationCardController?.toggle();
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      ScaffoldMessenger.of(matrix.context).clearMaterialBanners();
-                    });
-                  },
-                  icon: const Icon(Icons.close_outlined),
+                content: Text(
+                  _stationCardController?.widget.station['name'] ?? L10n.of(context).live,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ],
-            ),
-          );
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      _stationCardController?.toggle();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(matrix.context).clearMaterialBanners();
+                      });
+                    },
+                    icon: const Icon(Icons.close_outlined),
+                  ),
+                ],
+              ),
+            );
+          }
         } else {
           WakelockPlus.enable();
           WidgetsBinding.instance.addPostFrameCallback((_) {
