@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fluffychat/l10n/l10n.dart';
+import 'package:fluffychat/pages/new_route/experience_selection_sheet.dart';
 import 'package:fluffychat/pages/new_route/new_route_view.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
@@ -31,17 +32,20 @@ class NewRouteController extends State<NewRoute> {
   Map<String, dynamic>? selectedCategory;
   XFile? image;
   List<Map<String, dynamic>> experiences = [];
-  List<int> selectedExperiences = [];
+  List<Map<String, dynamic>> selectedExperiences = [];
 
-  void selectExperience(int id) {
+  void selectExperience(Map<String, dynamic> value) {
+    if (selectedExperiences.contains(value)) {
+      return;
+    }
     setState(() {
-      selectedExperiences.add(id);
+      selectedExperiences.add(value);
     });
   }
 
-  void unselectExperience(int id) {
+  void unselectExperience(Map<String, dynamic> value) {
     setState(() {
-      selectedExperiences.remove(id);
+      selectedExperiences.remove(value);
     });
   }
 
@@ -160,6 +164,19 @@ class NewRouteController extends State<NewRoute> {
           error = l10n.newRouteError;
         });
       }
+    }
+  }
+
+  Future<void> addExperience() async {
+    final result = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      builder: (context) {
+        return ExperienceSelectionSheet(experiences: experiences);
+      },
+    );
+
+    if (result != null) {
+      selectExperience(result);
     }
   }
 
