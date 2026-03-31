@@ -5,20 +5,24 @@ import 'package:fluffychat/pages/moments/live_chip_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
+typedef StationCardSetter = void Function(StationCardController controller);
+
 class StationCard extends StatefulWidget {
   final Map<String, dynamic> station;
   final AudioPlayer player;
+  final StationCardSetter setStationCardController;
   const StationCard({
     super.key,
     required this.station,
     required this.player,
+    required this.setStationCardController,
   });
 
   @override
-  State<StationCard> createState() => _StationCardState();
+  State<StationCard> createState() => StationCardController();
 }
 
-class _StationCardState extends State<StationCard> {
+class StationCardController extends State<StationCard> {
   bool isPlaying = false;
   StreamSubscription<SequenceState>? _subscription;
 
@@ -55,6 +59,8 @@ class _StationCardState extends State<StationCard> {
           setState(() {
             isPlaying = false;
           });
+        } else {
+          widget.setStationCardController(this);
         }
       }
     });

@@ -5,10 +5,60 @@ import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix/matrix.dart';
 
-class RoomsView extends StatelessWidget {
-  const RoomsView(this.controller, {super.key});
+class RoomListTile extends StatelessWidget {
+  final Map<String, dynamic> data;
 
+  final void Function()? onPressedJoin;
+  final void Function()? onPressedDelete;
+  const RoomListTile({
+    super.key,
+    required this.data,
+    required this.onPressedJoin,
+    required this.onPressedDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final canDelete = Matrix.of(context).client.userID?.localpart == data['username'];
+
+    return ListTile(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(16.0),
+      ),
+      tileColor: AppColors.blueGrey,
+      title: Text(
+        data['name'],
+        textAlign: TextAlign.center,
+      ),
+      subtitle: Center(
+        child: OverflowBar(
+          spacing: 8.0,
+          overflowSpacing: 8.0,
+          children: [
+            FilledButton(
+              onPressed: onPressedJoin,
+              child: const Text("Join Now"),
+            ),
+            if (canDelete)
+              FilledButton(
+                onPressed: onPressedDelete,
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.red1,
+                  foregroundColor: AppColors.white1,
+                ),
+                child: const Text("Delete"),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoomsView extends StatelessWidget {
   final RoomsController controller;
+
+  const RoomsView(this.controller, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +106,7 @@ class RoomsView extends StatelessWidget {
                       if (controller.myCircles.isNotEmpty)
                         ListView.separated(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: controller.myCircles.length,
                           separatorBuilder: (_, __) => const SizedBox(height: 16.0),
                           itemBuilder: (context, index) => RoomListTile(
@@ -90,77 +141,30 @@ class RoomsView extends StatelessWidget {
                       ),
                       const SizedBox(height: 16.0),
                       Expanded(
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: controller.circles.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 16.0),
-                          itemBuilder: (context, index) => RoomListTile(
-                            onPressedDelete: controller.loading
-                                ? null
-                                : () => controller.deleteCircle(
-                                      controller.circles[index]['id'],
-                                    ),
-                            onPressedJoin: controller.loading
-                                ? null
-                                : () => controller.getAccessToken(
-                                      controller.circles[index]['name'],
-                                    ),
-                            data: controller.circles[index],
+                        child: RefreshIndicator.adaptive(
+                          onRefresh: controller.refresh,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: controller.circles.length,
+                            separatorBuilder: (_, __) => const SizedBox(height: 16.0),
+                            itemBuilder: (context, index) => RoomListTile(
+                              onPressedDelete: controller.loading
+                                  ? null
+                                  : () => controller.deleteCircle(
+                                        controller.circles[index]['id'],
+                                      ),
+                              onPressedJoin: controller.loading
+                                  ? null
+                                  : () => controller.getAccessToken(
+                                        controller.circles[index]['name'],
+                                      ),
+                              data: controller.circles[index],
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-      ),
-    );
-  }
-}
-
-class RoomListTile extends StatelessWidget {
-  const RoomListTile({
-    super.key,
-    required this.data,
-    required this.onPressedJoin,
-    required this.onPressedDelete,
-  });
-
-  final Map<String, dynamic> data;
-  final void Function()? onPressedJoin;
-  final void Function()? onPressedDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    final canDelete = Matrix.of(context).client.userID?.localpart == data['username'];
-
-    return ListTile(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(16.0),
-      ),
-      tileColor: AppColors.blueGrey,
-      title: Text(
-        data['name'],
-        textAlign: TextAlign.center,
-      ),
-      subtitle: Center(
-        child: OverflowBar(
-          spacing: 8.0,
-          overflowSpacing: 8.0,
-          children: [
-            FilledButton(
-              onPressed: onPressedJoin,
-              child: const Text("Join Now"),
-            ),
-            if (canDelete)
-              FilledButton(
-                onPressed: onPressedDelete,
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.red1,
-                  foregroundColor: AppColors.white1,
-                ),
-                child: const Text("Delete"),
-              ),
-          ],
-        ),
       ),
     );
   }

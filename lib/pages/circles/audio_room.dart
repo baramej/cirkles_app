@@ -1,4 +1,5 @@
 import 'package:fluffychat/config/app_config.dart';
+import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/circles/audio_room_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -51,6 +52,14 @@ class AudioRoomController extends State<AudioRoom> {
       try {
         await WakelockPlus.enable();
         await room.connect(AppConfig.livekitServerUrl, widget.params.accessToken);
+
+        if (room.remoteParticipants.length > AppConfig.circlesParticipantsLimit) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(L10n.of(context).circlesParticipantLimitReached)));
+          context.pop();
+          return;
+        }
+
         room.localParticipant?.setMicrophoneEnabled(true);
         setState(() {
           loading = false;
