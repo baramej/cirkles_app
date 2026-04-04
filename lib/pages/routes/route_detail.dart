@@ -4,23 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RouteExperienceIcon {
-  static IconData toIconData(String name) {
-    switch (name) {
-      case 'wifi':
-        return Icons.wifi;
-      case 'parking':
-        return Icons.local_parking;
-      case 'restaurant':
-        return Icons.restaurant;
-      case 'gas':
-        return Icons.local_gas_station;
-      default:
-        return Icons.info;
-    }
-  }
-}
-
 class RouteDetail extends StatefulWidget {
   const RouteDetail({
     super.key,

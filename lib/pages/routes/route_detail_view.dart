@@ -1,5 +1,6 @@
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/routes/route_detail.dart';
+import 'package:fluffychat/pages/routes/route_experience_icon.dart';
 import 'package:flutter/material.dart';
 
 class RouteDetailView extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fluffychat/config/colors.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/new_route/new_route.dart';
+import 'package:fluffychat/pages/routes/route_experience_icon.dart';
 import 'package:flutter/material.dart';
 
 class NewRouteView extends StatelessWidget {
@@ -135,26 +136,61 @@ class NewRouteView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        Wrap(
-                          spacing: 16.0,
-                          runSpacing: 16.0,
-                          children: controller.experiences
-                              .map(
-                                (e) => CheckboxListTile.adaptive(
-                                  value: controller.selectedExperiences.contains(e['id']),
-                                  onChanged: (value) {
-                                    if (value == true) {
-                                      controller.selectExperience(e['id']);
-                                    } else {
-                                      controller.unselectExperience(e['id']);
-                                    }
-                                  },
-                                  title: Text(
-                                    Localizations.localeOf(context).languageCode == 'ar' ? e['name_ar'] : e['name'],
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                L10n.of(context).attributes,
+                                style: theme.textTheme.titleMedium,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            IconButton.outlined(onPressed: controller.addExperience, icon: const Icon(Icons.add)),
+                          ],
+                        ),
+                        const SizedBox(height: 16.0),
+                        Material(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(16),
+                            side: BorderSide(color: theme.colorScheme.primary),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsGeometry.all(16),
+                            child: controller.selectedExperiences.isEmpty
+                                ? ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: Text(L10n.of(context).attributesNotSelected),
+                                  )
+                                : Wrap(
+                                    spacing: 16.0,
+                                    runSpacing: 16.0,
+                                    children: controller.selectedExperiences
+                                        .map(
+                                          (e) => Chip(
+                                            label: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(
+                                                  RouteExperienceIcon.toIconData(
+                                                    e['icon'],
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  Localizations.localeOf(context).languageCode == 'ar'
+                                                      ? e['name_ar']
+                                                      : e['name'],
+                                                ),
+                                              ],
+                                            ),
+                                            onDeleted: () => controller.unselectExperience(e),
+                                            deleteIcon: const Icon(Icons.close),
+                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                          ),
+                                        )
+                                        .toList(),
                                   ),
-                                ),
-                              )
-                              .toList(),
+                          ),
                         ),
                         const SizedBox(height: 16.0),
                         FilledButton(
