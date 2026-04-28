@@ -19,6 +19,7 @@ class FluffyChatApp extends StatelessWidget {
   final String? pincode;
   final SharedPreferences store;
   final EmailValidation? emailValidation;
+  final List<String> supabaseAdmins;
 
   const FluffyChatApp({
     super.key,
@@ -27,6 +28,7 @@ class FluffyChatApp extends StatelessWidget {
     required this.store,
     required this.emailValidation,
     this.pincode,
+    this.supabaseAdmins = const [],
   });
 
   /// getInitialLink may rereturn the value multiple times if this view is
@@ -65,6 +67,7 @@ class FluffyChatApp extends StatelessWidget {
             clients: clients,
             store: store,
             emailValidation: emailValidation,
+            supabaseAdmins: supabaseAdmins,
             child: testWidget ?? child,
           ),
         ),

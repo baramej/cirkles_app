@@ -1,6 +1,7 @@
 import 'package:fluffychat/config/colors.dart';
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/routes/routes.dart';
+import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
 
 class RouteListTile extends StatelessWidget {
@@ -116,7 +117,7 @@ class RoutesView extends StatelessWidget {
         title: Text(L10n.of(context).routes),
         centerTitle: true,
         actions: [
-          if (!controller.hasOwnRoute)
+          if (!controller.hasOwnRoute || Matrix.of(context).isSupabaseAdmin)
             IconButton.filled(
               onPressed: controller.navigateToNewRoute,
               icon: const Icon(Icons.add),

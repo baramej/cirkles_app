@@ -46,6 +46,8 @@ class Matrix extends StatefulWidget {
   final SharedPreferences store;
 
   final EmailValidation? emailValidation;
+  
+  final List<String> supabaseAdmins;
 
   const Matrix({
     this.child,
@@ -53,6 +55,7 @@ class Matrix extends StatefulWidget {
     required this.store,
     this.queryParameters,
     this.emailValidation,
+    this.supabaseAdmins = const [],
     super.key,
   });
 
@@ -75,6 +78,8 @@ class MatrixState extends State<Matrix> with WidgetsBindingObserver {
   bool? loginRegistrationSupported;
 
   BackgroundPush? backgroundPush;
+
+  bool get isSupabaseAdmin => widget.supabaseAdmins.contains(client.userID?.localpart);
 
   Client get client {
     if (_activeClient < 0 || _activeClient >= widget.clients.length) {
