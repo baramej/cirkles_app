@@ -158,3 +158,5 @@ dependency_overrides:
       url: https://github.com/ThexXTURBOXx/flutter_web_auth_2.git
       ref: 3.x-without-v1
       path: flutter_web_auth_2
+  # https://github.com/flutter/flutter/issues/181382
+  path_provider_foundation: 2.5.1
