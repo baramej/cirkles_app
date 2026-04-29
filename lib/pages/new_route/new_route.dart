@@ -144,7 +144,7 @@ class NewRouteController extends State<NewRoute> {
         for (var i = 0; i < selectedExperiences.length; i++) {
           await Supabase.instance.client.from('route_route_experience').insert({
             "route_id": response[0]['id'],
-            "experience_id": selectedExperiences[i],
+            "experience_id": selectedExperiences[i]['id'],
           });
         }
 
@@ -159,6 +159,7 @@ class NewRouteController extends State<NewRoute> {
           context.pop(true);
         });
       } catch (err) {
+        Logs().e(err.toString());
         setState(() {
           loading = false;
           error = l10n.newRouteError;
