@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/routes/routes_view.dart';
 import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
@@ -92,10 +93,28 @@ class RoutesController extends State<Routes> {
     }
   }
 
-  void navigateToRouteDetail(int id) {
-    context.push(
+  Future<void> navigateToRouteDetail(int id) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    final result = await context.push<bool>(
       '${GoRouter.of(context).routeInformationProvider.value.uri.path}/$id',
     );
+
+    if (result == true) {
+      scaffoldMessenger.showSnackBar(
+        SnackBar(content: Text(L10n.of(context).routeDeleteSuccess)),
+      );
+
+      setState(() {
+        loading = true;
+      });
+
+      await loadRoutes();
+
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   Future<void> refresh() async {

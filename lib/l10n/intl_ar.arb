@@ -3325,5 +3325,8 @@
   "attributes": "Attributes",
   "attributesNotSelected": "You don't have any attribute selected.",
   "selectAnAttribute": "Select an attribute",
-  "noMatchingAttributeFound": "No matching attribute found."
+  "noMatchingAttributeFound": "No matching attribute found.",
+  "deleteRouteConfirm": "Are you sure you want to delete this route?",
+  "routeDeleteSuccess": "Route has been deleted successfully",
+  "routeDeleteError": "Can't delete the route"
 }
