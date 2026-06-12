@@ -1,6 +1,8 @@
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/routes/route_detail.dart';
 import 'package:fluffychat/pages/routes/route_experience_icon.dart';
+import 'package:fluffychat/widgets/adaptive_dialogs/show_ok_cancel_alert_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RouteDetailView extends StatelessWidget {
@@ -23,6 +25,20 @@ class RouteDetailView extends StatelessWidget {
                 style: theme.textTheme.titleLarge,
               )
             : null,
+        actions: [
+          if (controller.canDelete)
+            IconButton(
+              onPressed: () async {
+                final result =
+                    await showOkCancelAlertDialog(context: context, title: L10n.of(context).deleteRouteConfirm);
+                if (result == OkCancelResult.ok) {
+                  controller.deleteRoute();
+                }
+              },
+              icon: const Icon(CupertinoIcons.delete),
+              color: Colors.red,
+            ),
+        ],
       ),
       body: controller.loading
           ? const Center(

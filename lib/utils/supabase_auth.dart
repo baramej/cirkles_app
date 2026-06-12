@@ -35,4 +35,9 @@ class SupabaseAuth {
       }
     }
   }
+
+  static Future<List<String>> getSupabaseAdmins() async {
+    final response = await Supabase.instance.client.from('admins').select();
+    return response.map((e) => e["username"] as String).toList();
+  }
 }

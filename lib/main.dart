@@ -81,12 +81,24 @@ Future<void> startGui(List<Client> clients, SharedPreferences store) async {
   );
 
   final emailValidation = EmailValidation(firstClient);
+  var supabaseAdmins = <String>[];
   if (firstClient?.isLogged() == true) {
     await SupabaseAuth.registerOrLogin(firstClient!.userID!.localpart!);
     await emailValidation.init();
+    supabaseAdmins = await SupabaseAuth.getSupabaseAdmins();
   }
 
-  runApp(FluffyChatApp(clients: clients, pincode: pin, store: store, emailValidation: emailValidation));
+  Logs().i("Supabase Admins: $supabaseAdmins");
+
+  runApp(
+    FluffyChatApp(
+      clients: clients,
+      pincode: pin,
+      store: store,
+      emailValidation: emailValidation,
+      supabaseAdmins: supabaseAdmins,
+    ),
+  );
 }
 
 /// Watches the lifecycle changes to start the application when it

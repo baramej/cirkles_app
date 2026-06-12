@@ -1,6 +1,9 @@
 import 'package:fluffychat/l10n/l10n.dart';
 import 'package:fluffychat/pages/routes/route_detail_view.dart';
+import 'package:fluffychat/widgets/matrix.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:matrix/matrix.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,6 +24,7 @@ class RouteDetailController extends State<RouteDetail> {
   List<Map<String, dynamic>> experiences = [];
   bool loading = true;
   String? error;
+  bool canDelete = false;
 
   Future<void> initData() async {
     final l10n = L10n.of(context);
@@ -34,15 +38,46 @@ class RouteDetailController extends State<RouteDetail> {
         .eq('route_id', widget.routeId);
 
     if (routes.isNotEmpty) {
+      var allowDeleteAction = false;
+      final username = Matrix.of(context).client.userID?.localpart;
+
+      if (username != null) {
+        allowDeleteAction = routes.first["username"] == username;
+      }
+
       setState(() {
         loading = false;
         route = routes.first;
         experiences = response;
+        canDelete = allowDeleteAction;
       });
     } else {
       setState(() {
         loading = false;
         error = l10n.routeDetailError;
+      });
+    }
+  }
+
+  Future<void> deleteRoute() async {
+    if (route?['id'] == null) return;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      await Supabase.instance.client.rpc('delete_route', params: {'p_route_id': route!['id']});
+      context.pop(true);
+    } on PostgrestException catch (_) {
+      scaffoldMessenger.showSnackBar(
+        SnackBar(content: Text(L10n.of(context).routeDeleteError)),
+      );
+
+      setState(() {
+        loading = false;
       });
     }
   }
