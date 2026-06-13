@@ -1,0 +1,77 @@
+services:
+  traefik:
+    image: "traefik"
+    restart: "always"
+    command:
+      - "--api=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letls.acme.email=ali@bdtc.io"
+      - "--certificatesresolvers.letls.acme.storage=/certs/acme.json"
+      - "--certificatesresolvers.letls.acme.httpchallenge=true"
+      - "--certificatesresolvers.letls.acme.httpchallenge.entrypoint=web"
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "traefik_certs:/certs"
+
+  nginx:
+    image: nginx:1.22.0
+    restart: always
+    volumes:
+      - nginx_conf:/etc/nginx/conf.d
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.entrypoints=websecure"
+      - "traefik.http.routers.nginx.rule=Host(`cirkles.app`)"
+      - "traefik.http.routers.nginx.tls=true"
+      - "traefik.http.routers.nginx.tls.certresolver=letls"
+
+  synapse:
+    container_name: cirkles_synapse
+    image: docker.io/matrixdotorg/synapse:v1.63.0
+    depends_on:
+      - synapse_db
+    restart: unless-stopped
+    environment:
+      - SYNAPSE_CONFIG_PATH=/data/homeserver.yaml
+      - SYNAPSE_DB_USER=${POSTGRES_USER}
+      - SYNAPSE_DB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - synapse_data:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.synapse.entrypoints=websecure
+      - traefik.http.routers.synapse.rule=Host(`matrix.cirkles.app`)
+      - traefik.http.routers.synapse.tls=true
+      - traefik.http.routers.synapse.tls.certresolver=letls
+
+  synapse_db:
+    container_name: cirkles_synapse_db
+    image: docker.io/postgres:14-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER_FILE=/run/secrets/postgres_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    secrets:
+      - postgres_user
+      - postgres_password
+    volumes:
+      - synapse_db_data:/var/lib/postgresql/data
+
+secrets:
+  postgres_user:
+    environment: "POSTGRES_USER"
+  postgres_password:
+    environment: "POSTGRES_PASSWORD"
+
+volumes:
+  traefik_certs:
+  nginx_conf:
+  synapse_data:
+  synapse_db_data:
